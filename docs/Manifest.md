@@ -569,8 +569,8 @@ MF-02 Controlled Model Failover — ✅ COMPLETED
 19.4 Voice-First Intelligence Interface
 19.4.1 Voice Identity — ✅ COMPLETED
 19.4.2 Voice Profile Management
-19.4.3 Voice Cloning
-19.4.4 Voice Provider Abstraction
+19.4.3 Voice Cloning — ✅ COMPLETED
+19.4.4 Voice Provider Abstraction — ✅ COMPLETED
 19.4.5 Streaming Voice Interaction
 19.4.6 Voice Session Continuity
 19.4.7 Voice Interruption / Barge-in
@@ -623,6 +623,30 @@ authentication, authorization and execution authority remain separate
 security concepts.
 
 Voice output must never grant or imply execution authority.
+
+
+## 19.4.4 — Voice Provider Abstraction — ✅ COMPLETED / VALIDATED
+
+- Provider-neutral Voice Provider contracts established.
+- Provider descriptor and capability model established.
+- Deterministic provider registry established.
+- Capability-based routing view established.
+- `VoiceProviderGateway` established as the controlled provider execution boundary.
+- Streaming audio chunk contract established.
+- Realtime provider session boundary established.
+- Cloning capability boundary typed against the existing 19.4.3 contracts.
+- Provider/result request correlation enforced at the gateway.
+- Provider identity is treated as metadata, not an identity authority.
+- Provider capability does not grant Lyrion authorization.
+- Provider output remains untrusted external data.
+- Provider adapters remain replaceable and vendor-neutral.
+- Targeted 19.4.4 tests: 18 passed.
+- Full repository tests: 1011 passed, 59 skipped, 1 warning.
+- Ruff: PASS.
+- mypy: PASS across 94 source files.
+- Validation warning: Google GenAI SDK emitted an existing deprecation warning.
+- PostgreSQL integration tests remain skipped when `LYRION_DATABASE_URL` is absent.
+- Live Gemini cognitive integration remains skipped when `LYRION_LIVE_GEMINI` is absent.
 
 
 Lyrion
@@ -723,7 +747,7 @@ authority.
 Repository: ~/lyrion
 
 Latest verified pytest:
-993 passed
+1011 passed
 
 Skipped:
 59
@@ -738,7 +762,7 @@ mypy:
 PASS
 
 Verified source files:
-93
+94
 
 PostgreSQL-enabled integration validation:
 SKIPPED — LYRION_DATABASE_URL not set in latest full-suite run
@@ -747,10 +771,10 @@ Live Gemini validation:
 SKIPPED — LYRION_LIVE_GEMINI=1 not set in latest full-suite run
 
 Current completed implementation milestone:
-19.4.3 — Voice Cloning
+19.4.4 — Voice Provider Abstraction
 
 Current next implementation milestone:
-Continue the independent 19.4.x Voice-First implementation track
+19.4.5 — Streaming Voice Interaction
 
 ## 19.4.3 — Voice Cloning — ✅ COMPLETED / VALIDATED
 
