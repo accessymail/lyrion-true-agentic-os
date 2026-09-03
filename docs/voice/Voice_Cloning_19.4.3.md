@@ -1,7 +1,7 @@
 # Voice Cloning — 19.4.3
 
-**Status:** In Progress  
-**Track:** Voice-First  
+**Status:** In Progress
+**Track:** Voice-First
 **Architecture:** Provider-neutral
 
 ## Objective

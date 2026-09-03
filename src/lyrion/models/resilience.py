@@ -225,8 +225,8 @@ class FailoverModelGateway:
 
             try:
                 selection = self._router.route(
-                    request, 
-                    excluded_targets=excluded_targets, 
+                    request,
+                    excluded_targets=excluded_targets,
                 )
             except Exception as error:
                 if last_error is not None:
@@ -247,10 +247,10 @@ class FailoverModelGateway:
 
                 response = await _retry_operation(
                     execute_selected,
-                    request, 
+                    request,
                     self._policy,
                     deadline,
-                 
+
                 )
             except Exception as error:
                 if classify_model_error(error) is ModelErrorClass.TERMINAL:
@@ -266,7 +266,7 @@ class FailoverModelGateway:
 
         if last_error is not None:
             raise ModelFailoverError(
-                "all eligible model targets failed", 
+                "all eligible model targets failed",
             ) from last_error
 
         raise ModelFailoverError("no model target was available")
