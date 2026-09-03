@@ -332,6 +332,124 @@ class RecoveryDecisionModel(Base):
     )
 
 
+class PersistentVoiceSessionModel(Base):
+    """Persistent logical voice-session continuity record."""
+
+    __tablename__ = "voice_sessions"
+    __table_args__ = (
+        Index(
+            "ix_voice_sessions_state",
+            "state",
+        ),
+        Index(
+            "ix_voice_sessions_expires_at",
+            "expires_at",
+        ),
+    )
+
+    session_id: Mapped[str] = mapped_column(
+        String(200),
+        primary_key=True,
+    )
+    correlation_id: Mapped[str] = mapped_column(
+        String(200),
+        nullable=False,
+    )
+    state: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    session_revision: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+        default=0,
+    )
+    next_turn_sequence: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+        default=0,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    last_activity_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    resumable_until: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    continuity_version: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+        default=1,
+    )
+
+
+class PersistentVoiceTurnModel(Base):
+    """Persistent metadata for one voice-session turn."""
+
+    __tablename__ = "voice_session_turns"
+    __table_args__ = (
+        UniqueConstraint(
+            "session_id",
+            "sequence",
+            name="uq_voice_session_turns_session_sequence",
+        ),
+        Index(
+            "ix_voice_session_turns_session_id",
+            "session_id",
+        ),
+        Index(
+            "ix_voice_session_turns_request_id",
+            "request_id",
+        ),
+    )
+
+    turn_id: Mapped[str] = mapped_column(
+        String(200),
+        primary_key=True,
+    )
+    session_id: Mapped[str] = mapped_column(
+        String(200),
+        nullable=False,
+    )
+    sequence: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    request_id: Mapped[str] = mapped_column(
+        String(200),
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    input_reference: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
+    output_reference: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
+    status: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    provenance: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
+
+
 class VoiceIdentityProfileModel(Base):
     """Persistent voice identity profile lifecycle record."""
 

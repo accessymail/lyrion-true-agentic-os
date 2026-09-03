@@ -187,14 +187,18 @@ Memory never authorizes execution.
 
 # 7. VERIFIED REPOSITORY CHECKPOINT
 
-pytest: 910 passed
-Skipped: 59
+pytest: 1170 passed
+Skipped: 1
 Warnings: 1
 Ruff: PASS
-mypy: PASS
-Verified source files: 86
+mypy: PASS across 104 source files
+Verified source files: 104
 
-PostgreSQL-enabled integration validation: SKIPPED (LYRION_DATABASE_URL not set in latest full-suite run)
+PostgreSQL-enabled integration validation:
+19.4.6 Voice Session Continuity: 8 passed
+
+Live Gemini validation:
+SKIPPED (LYRION_LIVE_GEMINI=1 not set in latest full-suite run)
 
 This is the current known-good baseline.
 
@@ -571,9 +575,9 @@ MF-02 Controlled Model Failover — ✅ COMPLETED
 19.4.2 Voice Profile Management
 19.4.3 Voice Cloning — ✅ COMPLETED
 19.4.4 Voice Provider Abstraction — ✅ COMPLETED
-19.4.5 Streaming Voice Interaction
-19.4.6 Voice Session Continuity
-19.4.7 Voice Interruption / Barge-in
+19.4.5 Streaming Voice Interaction — ✅ COMPLETED
+19.4.6 Voice Session Continuity — ✅ COMPLETED
+19.4.7 Voice Interruption / Barge-in — ⏳ NEXT
 19.4.8 Voice Authentication Boundary
 19.4.9 Voice Evaluation
 19.4.10 RPII Integration
@@ -670,7 +674,10 @@ Lyrion
 ├── Scheduler / Consumer Integration      ✅
 │
 ├── Persistent Proactive Runtime          ✅
-├── Goal-Aware Proactivity                ⏳ NEXT
+├── Streaming Voice Interaction           ✅
+├── Voice Session Continuity              ✅
+├── Voice Interruption / Barge-in         ⏳ NEXT
+├── Goal-Aware Proactivity                ⏳
 ├── Adaptive Proactivity                  ⏳
 ├── Persistent Memory                     ⏳
 ├── AI Second Brain                       ⏳
@@ -747,10 +754,10 @@ authority.
 Repository: ~/lyrion
 
 Latest verified pytest:
-1011 passed
+1170 passed
 
 Skipped:
-59
+1
 
 Warnings:
 1
@@ -759,22 +766,94 @@ Ruff:
 PASS
 
 mypy:
-PASS
+PASS across 104 source files
 
 Verified source files:
-94
+104
 
 PostgreSQL-enabled integration validation:
-SKIPPED — LYRION_DATABASE_URL not set in latest full-suite run
+19.4.6 Voice Session Continuity: 8 passed
 
 Live Gemini validation:
 SKIPPED — LYRION_LIVE_GEMINI=1 not set in latest full-suite run
 
 Current completed implementation milestone:
-19.4.4 — Voice Provider Abstraction
+19.4.6 — Voice Session Continuity
 
 Current next implementation milestone:
-19.4.5 — Streaming Voice Interaction
+19.4.7 — Voice Interruption / Barge-in
+
+## 19.4.6 — Voice Session Continuity — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- immutable logical Voice Session continuity contracts
+- explicit voice session lifecycle states and transitions
+- session revision and turn sequence continuity controls
+- resumable-session metadata contracts
+- persistence-neutral VoiceSessionStore protocol
+- deterministic in-memory reference store
+- optimistic-concurrency session persistence
+- durable voice-session and voice-turn PostgreSQL models
+- SQLAlchemy voice-session store
+- transactional Persistence Unit of Work integration
+- atomic turn append with revision and sequence guards
+- unique per-session turn sequence constraint
+- PostgreSQL concurrent append validation
+- deterministic stale-revision, replay, and ordering conflict handling
+
+Validation:
+
+- session continuity and in-memory store validation: 53 passed
+- SQLAlchemy models/store/UoW validation: 48 passed
+- PostgreSQL voice session integration: 8 passed
+- full repository validation: 1170 passed, 1 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS across 104 source files
+
+Architecture review: PASS. Voice Session Continuity preserves the canonical Lyrion logical session boundary and keeps continuity separate from authentication, authorization, and execution authority. Provider sessions remain non-authoritative. Voice output does not grant execution authority.
+
+Scope boundary: Voice interruption / barge-in, voice authentication, voice evaluation, ASR/VAD, vendor realtime protocols, and new authorization mechanisms remain deferred to subsequent milestones.
+
+---
+
+## 19.4.5 — Streaming Voice Interaction — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- provider-neutral streaming input and output contracts
+- explicit streaming session lifecycle and state transitions
+- request correlation validation
+- provider output sequence validation
+- bounded input chunk size enforcement
+- active streaming task registration and cleanup
+- explicit cancellation of active streaming tasks
+- timeout enforcement
+- normalized provider failure handling
+- cognitive-to-streaming handoff through the existing Cognitive Runtime
+- per-session streaming metrics
+- adversarial validation for cancellation, timeout, provider failure,
+  correlation mismatch, sequence violation, cleanup, and unknown sessions
+
+Validation:
+
+- targeted streaming validation: 17 passed
+- full repository validation: 1028 passed, 59 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS across 98 source files
+- architecture/security review: PASS
+
+Architecture review: PASS. Streaming Voice Interaction remains a narrow
+provider-neutral orchestration layer above the existing VoiceProviderGateway.
+Provider capability and voice output do not grant authentication,
+authorization, or execution authority. Session continuity,
+interruption/barge-in policy, voice authentication, evaluation, and RPII
+remain separate milestones.
+
+Validation note: PostgreSQL integration tests remain environment-gated by
+LYRION_DATABASE_URL. Live Gemini validation remains opt-in via
+LYRION_LIVE_GEMINI=1. The single warning originates from the installed
+Google GenAI SDK.
 
 ## 19.4.3 — Voice Cloning — ✅ COMPLETED / VALIDATED
 

@@ -9,6 +9,8 @@ from lyrion.persistence.sqlalchemy.models import (
     PersistentExecutionModel,
     PersistentIdempotencyModel,
     PersistentOpportunityModel,
+    PersistentVoiceSessionModel,
+    PersistentVoiceTurnModel,
     RecoveryDecisionModel,
     RuntimeInstanceModel,
     RuntimeLeaseModel,
@@ -24,6 +26,8 @@ def test_all_persistence_models_share_base() -> None:
         PersistentExecutionModel,
         PersistentIdempotencyModel,
         RecoveryDecisionModel,
+        PersistentVoiceSessionModel,
+        PersistentVoiceTurnModel,
     )
 
     for model in models:
@@ -41,6 +45,8 @@ def test_expected_table_names_exist() -> None:
         "idempotency_records",
         "recovery_decisions",
         "voice_identity_profiles",
+        "voice_sessions",
+        "voice_session_turns",
     }
 
     assert expected == set(
@@ -139,3 +145,55 @@ def test_string_identity_columns_are_bounded() -> None:
     for column in checks:
         assert isinstance(column.type, String)
         assert column.type.length in {200, 500}
+
+
+def test_voice_session_has_revision_and_continuity_fields() -> None:
+    """Voice sessions need durable optimistic-concurrency state."""
+    table = PersistentVoiceSessionModel.__table__
+
+    assert table.c.session_id.primary_key is True
+    assert table.c.session_revision.nullable is False
+    assert table.c.next_turn_sequence.nullable is False
+    assert table.c.continuity_version.nullable is False
+
+
+def test_voice_session_timestamps_use_timezone_capable_sql_types() -> None:
+    """Voice-session timestamps must retain timezone support."""
+    checks = (
+        PersistentVoiceSessionModel.__table__.c.created_at,
+        PersistentVoiceSessionModel.__table__.c.last_activity_at,
+        PersistentVoiceSessionModel.__table__.c.expires_at,
+        PersistentVoiceSessionModel.__table__.c.resumable_until,
+        PersistentVoiceTurnModel.__table__.c.created_at,
+    )
+
+    for column in checks:
+        assert isinstance(column.type, DateTime)
+        assert column.type.timezone is True
+
+
+def test_voice_turn_sequence_is_unique_per_session() -> None:
+    """A session cannot contain two turns at one sequence position."""
+    table = cast(Table, PersistentVoiceTurnModel.__table__)
+
+    constraints = {
+        constraint.name
+        for constraint in table.constraints
+        if constraint.name is not None
+    }
+
+    assert (
+        "uq_voice_session_turns_session_sequence"
+        in constraints
+    )
+
+
+def test_voice_turn_contains_required_identity_fields() -> None:
+    """Durable turns must retain the continuity identity tuple."""
+    table = PersistentVoiceTurnModel.__table__
+
+    assert table.c.turn_id.primary_key is True
+    assert table.c.session_id.nullable is False
+    assert table.c.sequence.nullable is False
+    assert table.c.request_id.nullable is False
+    assert table.c.status.nullable is False
