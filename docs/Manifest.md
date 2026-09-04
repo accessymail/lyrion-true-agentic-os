@@ -578,7 +578,7 @@ MF-02 Controlled Model Failover — ✅ COMPLETED
 19.4.5 Streaming Voice Interaction — ✅ COMPLETED
 19.4.6 Voice Session Continuity — ✅ COMPLETED
 19.4.7 Voice Interruption / Barge-in — ✅ COMPLETED
-19.4.8 Voice Authentication Boundary
+19.4.8 Voice Authentication Boundary — ✅ COMPLETED
 19.4.9 Voice Evaluation
 19.4.10 RPII Integration
 
@@ -778,10 +778,10 @@ Live Gemini validation:
 SKIPPED — LYRION_LIVE_GEMINI=1 not set in latest full-suite run
 
 Current completed implementation milestone:
-19.4.7 — Voice Interruption / Barge-in
+19.4.8 — Voice Authentication Boundary
 
 Current next implementation milestone:
-19.4.8 — Voice Authentication Boundary
+19.4.9 — Voice Evaluation
 
 ## 19.4.6 — Voice Session Continuity — ✅ COMPLETED / VALIDATED
 
@@ -816,6 +816,55 @@ Architecture review: PASS. Voice Session Continuity preserves the canonical Lyri
 Scope boundary: Voice interruption / barge-in, voice authentication, voice evaluation, ASR/VAD, vendor realtime protocols, and new authorization mechanisms remain deferred to subsequent milestones.
 
 ---
+
+
+## 19.4.8 — Voice Authentication Boundary — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- provider-neutral voice authentication request/result contracts
+- immutable authentication state and evidence contracts
+- explicit authentication status and assurance levels
+- correlation and idempotency identifiers
+- bounded authentication request lifetime
+- opaque verification-evidence references
+- deterministic provider-neutral verification boundary
+- deterministic principal-binding validation
+- authentication/service separation from authorization
+- existing ReplayGuard integration for replay / idempotency protection
+- fail-closed verifier exception handling
+- future-request and expired-request handling
+- provider identity kept separate from authenticated principal identity
+- authenticated-principal matching against the claimed principal
+- explicit separation from authorization and execution authority
+- focused contract and verifier validation
+- adversarial validation for replay, concurrent requests, principal substitution,
+  timing, evidence handling, verifier failure, and authorization escalation
+
+Validation:
+
+- targeted authentication validation: 60 passed
+- full repository validation: 1174 passed, 67 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS across 108 source files
+- git diff --check: PASS
+
+Architecture review: PASS. Voice Authentication remains a provider-neutral
+security boundary that establishes bounded authentication state only.
+Authentication does not grant authorization, capability permissions, or execution
+authority. Provider identity remains metadata, provider output remains untrusted
+external data, and replay protection uses the existing security boundary.
+
+Validation note: PostgreSQL integration tests remain environment-gated by
+`LYRION_DATABASE_URL`. Live Gemini validation remains opt-in via
+`LYRION_LIVE_GEMINI=1`. The single full-suite warning originates from the
+installed Google GenAI SDK.
+
+Scope boundary: biometric computation, vendor-specific voice authentication
+adapters, durable cross-restart authentication replay persistence, new
+authorization mechanisms, voice evaluation, ASR/VAD, and RPII remain outside
+this milestone.
+
 
 ## 19.4.7 — Voice Interruption / Barge-in — ✅ COMPLETED / VALIDATED
 
