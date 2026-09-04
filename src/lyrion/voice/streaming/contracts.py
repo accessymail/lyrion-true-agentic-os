@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import StrEnum
+from math import isfinite
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -173,6 +174,13 @@ class VoiceStreamMetrics(BaseModel):
         default=None,
         ge=0.0,
     )
+
+    @field_validator("duration_seconds", "first_output_latency_seconds")
+    @classmethod
+    def require_finite_metrics(cls, value: float | None) -> float | None:
+        if value is not None and not isfinite(value):
+            raise ValueError("stream metrics must be finite")
+        return value
 
 
 def utc_now() -> datetime:
