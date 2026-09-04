@@ -579,8 +579,8 @@ MF-02 Controlled Model Failover — ✅ COMPLETED
 19.4.6 Voice Session Continuity — ✅ COMPLETED
 19.4.7 Voice Interruption / Barge-in — ✅ COMPLETED
 19.4.8 Voice Authentication Boundary — ✅ COMPLETED
-19.4.9 Voice Evaluation
-19.4.10 RPII Integration
+19.4.9 Voice Evaluation — ✅ COMPLETED
+19.4.10 RPII Integration — ✅ COMPLETED
 
 20.x Cognitive Context
 21.x Memory Architecture
@@ -754,7 +754,7 @@ authority.
 Repository: ~/lyrion
 
 Latest verified pytest:
-1114 passed
+1297 passed
 
 Skipped:
 67
@@ -766,22 +766,139 @@ Ruff:
 PASS
 
 mypy:
-PASS across 104 source files
+PASS across 116 source files
 
 Verified source files:
-104
+116
+
+RPII targeted validation:
+50 passed
+
+RPII real PIAE / Gateway / Secure Executor path validation:
+25 passed
 
 PostgreSQL-enabled integration validation:
-19.4.6 Voice Session Continuity: 8 passed
+Environment-gated; skipped in the latest full-suite run because `LYRION_DATABASE_URL` was not set.
 
 Live Gemini validation:
-SKIPPED — LYRION_LIVE_GEMINI=1 not set in latest full-suite run
+SKIPPED — `LYRION_LIVE_GEMINI=1` not set in latest full-suite run
 
 Current completed implementation milestone:
-19.4.8 — Voice Authentication Boundary
+19.4.10 — RPII Integration
 
 Current next implementation milestone:
-19.4.9 — Voice Evaluation
+20.x — Cognitive Context
+
+## 19.4.9 — Voice Evaluation — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- provider-neutral Voice Evaluation contracts
+- deterministic evaluator and aggregation boundaries
+- bounded voice quality/evaluation result composition
+- hardened numeric metric validation
+- adversarial validation for malformed and non-finite evaluation inputs
+- evaluation service boundary separated from voice identity, authentication,
+  authorization, and execution authority
+
+Validation:
+
+- targeted Voice Evaluation validation: 73 passed
+- full repository validation at milestone close: 1247 passed, 67 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS
+- git diff --check: PASS
+
+Architecture review: PASS. Voice Evaluation remains an evaluation and
+measurement capability and does not grant identity, authorization, or
+execution authority.
+
+Validation note: PostgreSQL integration tests remain environment-gated by
+`LYRION_DATABASE_URL`. Live Gemini validation remains opt-in via
+`LYRION_LIVE_GEMINI=1`. The single warning originates from the installed
+Google GenAI SDK.
+
+---
+
+## 19.4.10 — RPII Integration — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- provider-neutral RPII lifecycle contracts
+- immutable RPII context and cycle-result boundaries
+- explicit RPII lifecycle stage/status vocabulary
+- bounded `RPIIService` orchestration facade
+- deterministic RPII interaction/session context reference
+- structural identity binding across decision, capability request,
+  execution admission, execution request, execution plan, and execution result
+- confused-deputy resistance through cross-artifact identity verification
+- fail-closed handling for mismatched execution artifacts
+- authority-field injection resistance through strict contracts
+- reuse of the existing PIAE Action Loop, Capability Gateway, Aegis
+  authorization boundary, and Secure Executor
+- no direct authorization or privileged execution mechanism introduced
+  inside the RPII module
+- durable execution remains delegated to the existing persistent execution
+  runner rather than duplicated inside RPII
+
+Canonical RPII composition:
+
+RPII Context
+      ↓
+PIAE Action Loop
+      ↓
+Decision
+      ↓
+Capability Request
+      ↓
+Capability Gateway / Aegis
+      ↓
+Execution Admission
+      ↓
+Secure Executor
+      ↓
+Execution Result
+      ↓
+RPII Structural Verification
+      ↓
+RPII Cycle Result
+
+Security boundary remains:
+
+Observation ≠ Opportunity ≠ Decision ≠ Authorization ≠ Execution
+
+Validation:
+
+- targeted RPII contract/service validation: 50 passed
+- real PIAE → Capability Gateway → Secure Executor validation: 25 passed
+- full repository validation: 1297 passed, 67 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS across 116 source files
+- git diff --check: PASS
+
+Architecture review: PASS. RPII is an orchestration/lifecycle layer and does
+not become a second authorization or execution authority. Capability
+authorization remains with Aegis / Capability Gateway. Secure execution
+remains with Secure Executor. RPII verifies identity continuity and
+artifact binding without manufacturing execution authority.
+
+Scope boundary:
+
+- no unrestricted autonomy
+- no AGI or consciousness claim
+- no unrestricted shell/filesystem/MCP access
+- no autonomous governance modification
+- no autonomous self-improvement deployment
+- no unrestricted multi-agent swarm
+- no high-risk autonomous transactions
+- no duplication of durable execution persistence
+
+Validation note: PostgreSQL integration tests remain environment-gated by
+`LYRION_DATABASE_URL`. Live Gemini validation remains opt-in via
+`LYRION_LIVE_GEMINI=1`. The single warning originates from the installed
+Google GenAI SDK.
+
+---
 
 ## 19.4.6 — Voice Session Continuity — ✅ COMPLETED / VALIDATED
 

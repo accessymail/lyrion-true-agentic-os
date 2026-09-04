@@ -1,4 +1,4 @@
-"""RPII integration contracts for Lyrion."""
+"""Real Proactive Interactive Intelligence contracts and orchestration."""
 
 from lyrion.rpii.contracts import (
     RPIIContext,
@@ -6,10 +6,13 @@ from lyrion.rpii.contracts import (
     RPIIStage,
     RPIIStatus,
 )
+from lyrion.rpii.service import RPIIActionRunner, RPIIService
 
 __all__ = [
-    "RPIIContext",
+    "RPIIActionRunner",
     "RPIICycleResult",
+    "RPIIContext",
+    "RPIIService",
     "RPIIStage",
     "RPIIStatus",
 ]
