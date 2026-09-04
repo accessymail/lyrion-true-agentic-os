@@ -2,6 +2,10 @@
 
 from lyrion.voice.streaming.contracts import (
     VoiceInputChunk,
+    VoiceInterruptionReason,
+    VoiceInterruptionRequest,
+    VoiceInterruptionResult,
+    VoiceInterruptionStatus,
     VoiceOutputChunk,
     VoiceStreamError,
     VoiceStreamErrorCode,
@@ -17,6 +21,10 @@ from lyrion.voice.streaming.service import (
 
 __all__ = [
     "VoiceInputChunk",
+    "VoiceInterruptionReason",
+    "VoiceInterruptionRequest",
+    "VoiceInterruptionResult",
+    "VoiceInterruptionStatus",
     "VoiceOutputChunk",
     "VoiceStreamError",
     "VoiceStreamErrorCode",

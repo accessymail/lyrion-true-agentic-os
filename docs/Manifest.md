@@ -187,8 +187,8 @@ Memory never authorizes execution.
 
 # 7. VERIFIED REPOSITORY CHECKPOINT
 
-pytest: 1170 passed
-Skipped: 1
+pytest: 1114 passed
+Skipped: 67
 Warnings: 1
 Ruff: PASS
 mypy: PASS across 104 source files
@@ -577,7 +577,7 @@ MF-02 Controlled Model Failover — ✅ COMPLETED
 19.4.4 Voice Provider Abstraction — ✅ COMPLETED
 19.4.5 Streaming Voice Interaction — ✅ COMPLETED
 19.4.6 Voice Session Continuity — ✅ COMPLETED
-19.4.7 Voice Interruption / Barge-in — ⏳ NEXT
+19.4.7 Voice Interruption / Barge-in — ✅ COMPLETED
 19.4.8 Voice Authentication Boundary
 19.4.9 Voice Evaluation
 19.4.10 RPII Integration
@@ -676,7 +676,7 @@ Lyrion
 ├── Persistent Proactive Runtime          ✅
 ├── Streaming Voice Interaction           ✅
 ├── Voice Session Continuity              ✅
-├── Voice Interruption / Barge-in         ⏳ NEXT
+├── Voice Interruption / Barge-in         ✅
 ├── Goal-Aware Proactivity                ⏳
 ├── Adaptive Proactivity                  ⏳
 ├── Persistent Memory                     ⏳
@@ -754,10 +754,10 @@ authority.
 Repository: ~/lyrion
 
 Latest verified pytest:
-1170 passed
+1114 passed
 
 Skipped:
-1
+67
 
 Warnings:
 1
@@ -778,10 +778,10 @@ Live Gemini validation:
 SKIPPED — LYRION_LIVE_GEMINI=1 not set in latest full-suite run
 
 Current completed implementation milestone:
-19.4.6 — Voice Session Continuity
+19.4.7 — Voice Interruption / Barge-in
 
 Current next implementation milestone:
-19.4.7 — Voice Interruption / Barge-in
+19.4.8 — Voice Authentication Boundary
 
 ## 19.4.6 — Voice Session Continuity — ✅ COMPLETED / VALIDATED
 
@@ -814,6 +814,50 @@ Validation:
 Architecture review: PASS. Voice Session Continuity preserves the canonical Lyrion logical session boundary and keeps continuity separate from authentication, authorization, and execution authority. Provider sessions remain non-authoritative. Voice output does not grant execution authority.
 
 Scope boundary: Voice interruption / barge-in, voice authentication, voice evaluation, ASR/VAD, vendor realtime protocols, and new authorization mechanisms remain deferred to subsequent milestones.
+
+---
+
+## 19.4.7 — Voice Interruption / Barge-in — ✅ COMPLETED / VALIDATED
+
+Implemented:
+
+- immutable provider-neutral interruption request/result contracts
+- explicit barge-in interruption reason and status contracts
+- generation-aware active-turn fencing
+- active request correlation enforcement
+- interruption-aware streaming lifecycle handling
+- barge-in transition back to reusable `STREAMING`
+- explicit separation of interruption from terminal cancellation
+- active streaming task cancellation on interruption
+- interrupted-turn completion suppression
+- stale / late provider-output rejection after interruption
+- idempotent duplicate interruption handling
+- session reuse after interrupted turns
+- interruption metrics
+- public package exports for interruption contracts
+- adversarial validation for concurrent interruption requests,
+  stale output, session reuse, request mismatch, idempotency,
+  terminal cancellation separation, and interruption races
+
+Validation:
+
+- targeted streaming / interruption validation: 27 passed
+- full repository validation: 1114 passed, 67 skipped, 1 warning
+- Ruff: PASS
+- mypy: PASS across 104 source files
+
+Architecture review: PASS. Voice interruption / barge-in remains an
+application-layer orchestration boundary above the existing
+VoiceProviderGateway. Interruption cancels the active turn without
+granting authentication, authorization, or execution authority.
+Generation fencing prevents stale turns and late provider output from
+crossing into a replacement turn. Voice output remains untrusted
+external data.
+
+Validation note: PostgreSQL integration tests remain environment-gated
+by `LYRION_DATABASE_URL`. Live Gemini validation remains opt-in via
+`LYRION_LIVE_GEMINI=1`. The single warning originates from the installed
+Google GenAI SDK.
 
 ---
 

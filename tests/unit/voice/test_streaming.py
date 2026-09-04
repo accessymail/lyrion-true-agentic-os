@@ -1,4 +1,4 @@
-"""Unit tests for the 19.4.5 streaming voice interaction boundary."""
+"""Unit tests for streaming voice interaction and 19.4.7 barge-in."""
 
 import asyncio
 from collections.abc import AsyncIterator
@@ -852,3 +852,138 @@ async def _wait_for_active_task(
         await asyncio.sleep(0)
 
     raise AssertionError("streaming task was not registered")
+
+
+@pytest.mark.asyncio
+async def test_concurrent_interrupt_requests_only_one_is_accepted() -> None:
+    provider = BlockingStreamingProvider()
+    service = VoiceStreamingService(make_gateway(provider))
+    await service.start(session_id="session-1")
+
+    task = asyncio.create_task(
+        _consume_stream(
+            service,
+            session_id="session-1",
+            provider_id="provider-a",
+            request=make_request("request-1"),
+        )
+    )
+
+    await _wait_for_active_task(service, "session-1")
+
+    request = VoiceInterruptionRequest(
+        session_id="session-1",
+        request_id="request-1",
+        reason=VoiceInterruptionReason.BARGE_IN,
+        requested_at=datetime.now(UTC),
+    )
+
+    first, second = await asyncio.gather(
+        service.interrupt(request),
+        service.interrupt(request),
+    )
+
+    statuses = {first.status, second.status}
+    assert statuses == {
+        VoiceInterruptionStatus.REQUESTED,
+        VoiceInterruptionStatus.ALREADY_INTERRUPTED,
+    }
+
+    with pytest.raises(VoiceStreamExecutionError) as exc_info:
+        await task
+
+    assert exc_info.value.error.code is VoiceStreamErrorCode.INTERRUPTED
+    assert (await service.metrics("session-1")).interruptions == 1
+    assert (await service.get("session-1")).state is VoiceStreamState.STREAMING
+
+
+@pytest.mark.asyncio
+async def test_interrupted_old_turn_cannot_complete_after_new_turn_starts() -> None:
+    provider = StaleOutputStreamingProvider()
+    service = VoiceStreamingService(make_gateway(provider))
+    await service.start(session_id="session-1")
+
+    first_task = asyncio.create_task(
+        _consume_stream(
+            service,
+            session_id="session-1",
+            provider_id="provider-a",
+            request=make_request("request-1"),
+        )
+    )
+
+    await _wait_for_active_task(service, "session-1")
+
+    await service.interrupt(
+        VoiceInterruptionRequest(
+            session_id="session-1",
+            request_id="request-1",
+            reason=VoiceInterruptionReason.BARGE_IN,
+            requested_at=datetime.now(UTC),
+        )
+    )
+
+    with pytest.raises(VoiceStreamExecutionError) as exc_info:
+        await first_task
+
+    assert exc_info.value.error.code is VoiceStreamErrorCode.INTERRUPTED
+
+    service._gateway = make_gateway(FakeStreamingProvider())
+
+    chunks = [
+        chunk
+        async for chunk in service.stream_synthesis(
+            session_id="session-1",
+            provider_id="provider-a",
+            request=make_request("request-2"),
+        )
+    ]
+
+    assert len(chunks) == 1
+    assert chunks[0].request_id == "request-2"
+
+    provider.release.set()
+
+    assert (await service.metrics("session-1")).turns_completed == 0
+    assert (await service.get("session-1")).state is VoiceStreamState.STREAMING
+
+
+@pytest.mark.asyncio
+async def test_interrupt_racing_with_provider_output_blocks_stale_chunk() -> None:
+    provider = StaleOutputStreamingProvider()
+    service = VoiceStreamingService(make_gateway(provider))
+    await service.start(session_id="session-1")
+
+    task = asyncio.create_task(
+        _consume_stream(
+            service,
+            session_id="session-1",
+            provider_id="provider-a",
+            request=make_request("request-1"),
+        )
+    )
+
+    await _wait_for_active_task(service, "session-1")
+
+    interrupt_task = asyncio.create_task(
+        service.interrupt(
+            VoiceInterruptionRequest(
+                session_id="session-1",
+                request_id="request-1",
+                reason=VoiceInterruptionReason.BARGE_IN,
+                requested_at=datetime.now(UTC),
+            )
+        )
+    )
+
+    result = await interrupt_task
+    assert result.status is VoiceInterruptionStatus.REQUESTED
+
+    provider.release.set()
+
+    with pytest.raises(VoiceStreamExecutionError) as exc_info:
+        await task
+
+    assert exc_info.value.error.code is VoiceStreamErrorCode.INTERRUPTED
+    assert (await service.metrics("session-1")).output_chunks == 0
+    assert (await service.get("session-1")).state is VoiceStreamState.STREAMING
