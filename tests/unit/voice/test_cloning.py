@@ -85,7 +85,10 @@ def test_pending_job_is_immutable():
 
 
 def test_pending_to_processing_is_allowed():
-    job = create_pending_job(_request())
+    job = create_pending_job(
+        _request(),
+        now=datetime(2026, 9, 3, 10, 2, tzinfo=UTC),
+    )
 
     transitioned = VoiceCloneLifecycle.transition(
         job,
