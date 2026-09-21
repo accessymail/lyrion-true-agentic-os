@@ -139,6 +139,12 @@ def _child_source() -> str:
 
             os.write(ready_fd, b"READY")
 
+            mapping_ready_fd = int(sys.argv[3])
+            if os.read(mapping_ready_fd, 1) != b"M":
+                raise RuntimeError(
+                    "Parent did not signal completion of UID/GID mapping"
+                )
+
             if libc.prctl(
                 PR_SET_NO_NEW_PRIVS,
                 1,
@@ -228,6 +234,7 @@ def test_parent_no_new_privs_state_is_unchanged() -> None:
 def test_disposable_user_namespace_can_apply_no_new_privs() -> None:
     ready_read, ready_write = os.pipe()
     result_read, result_write = os.pipe()
+    mapping_read, mapping_write = os.pipe()
 
     child = subprocess.Popen(
         [
@@ -236,17 +243,19 @@ def test_disposable_user_namespace_can_apply_no_new_privs() -> None:
             _child_source(),
             str(ready_write),
             str(result_write),
+            str(mapping_read),
         ],
         stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         close_fds=True,
-        pass_fds=(ready_write, result_write),
+        pass_fds=(ready_write, result_write, mapping_read),
         start_new_session=True,
     )
 
     os.close(ready_write)
     os.close(result_write)
+    os.close(mapping_read)
 
     try:
         ready = os.read(ready_read, 5)
@@ -287,6 +296,9 @@ def test_disposable_user_namespace_can_apply_no_new_privs() -> None:
             f"0 {host_gid} 1\n",
         )
 
+        os.write(mapping_write, b"M")
+        os.close(mapping_write)
+
         stdout, stderr = child.communicate(timeout=5)
 
         result_chunks: list[bytes] = []
@@ -314,6 +326,11 @@ def test_disposable_user_namespace_can_apply_no_new_privs() -> None:
     finally:
         os.close(ready_read)
         os.close(result_read)
+
+        try:
+            os.close(mapping_write)
+        except OSError:
+            pass
 
         if child.poll() is None:
             child.kill()
