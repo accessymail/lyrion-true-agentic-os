@@ -3,9 +3,9 @@ requires = ["setuptools>=78"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lyrion-intelligence-os"
+name = "lyrion-true-agentic-os"
 version = "0.1.0"
-description = "Lyrion Intelligence OS — a secure, modular, cloud-first personal intelligence platform."
+description = "LYRION True Agentic OS — a secure, modular, production-grade agentic operating system."
 readme = "README.md"
 requires-python = ">=3.14,<3.15"
 license = { text = "UNLICENSED" }
