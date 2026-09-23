@@ -318,6 +318,45 @@ normal governed request path.
 
 ---
 
+## CORE-FR-014 — Live Development & Execution Workspace
+
+The Core SHALL provide a governed Live Development & Execution Workspace
+for authorized development, inspection, testing, preview, and execution
+workflows.
+
+The workspace MAY support, as applicable:
+
+- project and source inspection;
+- controlled source editing;
+- build and test execution;
+- development-time application or browser preview;
+- authorized host/application interaction;
+- execution result and artifact inspection;
+- provenance and verification of workspace actions.
+
+The workspace SHALL remain subordinate to the established LYRION identity,
+task, authority, capability, security, execution, sandbox, LHICF,
+verification, and provenance architecture.
+
+The workspace SHALL NOT constitute an alternate privileged execution path,
+grant authority by workspace membership, or permit bypass of Aegis,
+Capability Gateway, Execution Admission, Secure Executor, Agent Sandbox,
+LHICF, HITL controls where required, or independent verification.
+
+Security-sensitive and consequential operations SHALL remain subject to the
+same deny-by-default, least-privilege, resource, isolation, authorization,
+audit, provenance, verification, recovery, and emergency-control
+requirements applicable to the rest of the Core.
+
+Autonomous self-learning and autonomous self-evolution SHALL remain outside
+the current Core implementation scope. Controlled learning, research,
+evaluation, experimentation, and system-improvement workflows may remain
+architectural capabilities, but SHALL NOT authorize unrestricted
+self-modification, autonomous security-policy modification, self-granted
+authority, or uncontrolled capability expansion.
+
+**Status:** Architecture requirement — implementation not yet authorized.
+
 # 9. Agentic Core Requirements
 
 ## CORE-AG-001 — Agent Identity

@@ -52,7 +52,7 @@ The matrix SHALL preserve the established source hierarchy:
 
 | Family | IDs | Architectural Mapping | Primary Security Boundary | Validation |
 |---|---|---|---|---|
-| Functional | CORE-FR-001..013 | Interaction, Identity, Intelligence, Application Runtime | Identity / Session / Aegis | Unit + Integration + E2E |
+| Functional | CORE-FR-001..014 | Interaction, Identity, Intelligence, Application Runtime, Live Development & Execution Workspace | Identity / Session / Aegis / Capability Gateway / Execution Admission | Unit + Integration + E2E + workspace/security-boundary validation |
 | Agentic | CORE-AG-001..008 | Agent Identity, Registry, ACP, Delegation, Communication | Aegis + Authority | Contract + Identity + ACP + Adversarial |
 | Security | CORE-SEC-001..010 | Aegis, HITL, Governance | Independent authorization | Security + adversarial |
 | Execution | CORE-EXEC-001..006 | Capability Gateway, Secure Executor, Sandbox, LHICF | Execution Admission | Integration + host E2E + escape tests |
