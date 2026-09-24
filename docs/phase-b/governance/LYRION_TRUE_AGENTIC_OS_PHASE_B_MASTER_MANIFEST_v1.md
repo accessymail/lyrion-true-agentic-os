@@ -6,7 +6,7 @@
 **Status:** DRAFT — PHASE-B DOCUMENTATION MASTER MANIFEST
 **Project:** LYRION True Agentic OS
 **Phase:** Phase B
-**Architecture Approval:** PENDING
+**Architecture Approval:** APPROVED
 **Implementation Authorization:** NOT AUTHORIZED
 **Production Implementation:** BLOCKED
 **Production Certification:** NOT CLAIMED
@@ -72,7 +72,7 @@ The authoritative current Phase-B governance state is:
 
 | Control | State |
 |---|---|
-| Architecture Approval | PENDING |
+| Architecture Approval | APPROVED |
 | Implementation Authorization | NOT AUTHORIZED |
 | Production Implementation | BLOCKED |
 | Production Certification | NOT CLAIMED |
@@ -507,9 +507,9 @@ The existing PRD remains subject to formal approval.
 
 ## 27. Phase-B Architecture Approval Boundary
 
-Formal Phase-B Architecture Approval remains:
+Formal Phase-B Architecture Approval is:
 
-**PENDING**
+**APPROVED**
 
 Architecture approval SHALL require the applicable requirements,
 architecture, security, data, governance, traceability, validation,
@@ -604,7 +604,7 @@ Before this manifest is accepted as the Phase-B Master Manifest:
 
 **PB-DOC-020 Status:** DRAFT — MASTER MANIFEST BASELINE
 
-**Architecture Approval:** PENDING
+**Architecture Approval:** APPROVED
 
 **Implementation Authorization:** NOT AUTHORIZED
 
@@ -637,3 +637,27 @@ It SHALL NOT convert documented architecture into implementation authority.
 ---
 
 ## End of Manifest
+
+<!--
+PHASE-B ARCHITECTURE APPROVAL DECISION RECORD
+This record is governance evidence.
+-->
+
+## Phase-B Architecture Approval Decision Record
+
+- Decision: APPROVED
+- Reviewer: Aniket Pawar
+- Review Reference: LYRION-PHASE-B-ARCH-APPROVAL-001
+- Decision Timestamp (UTC): 2026-09-24T03:57:29.540074+00:00
+- Pre-Decision Master Manifest SHA-256: df8f87893403ced7de1a7794aa635315482be3716f0e5f6e6eed23441fb5ea02
+- Evidence Consolidation: PASS
+- Evidence Categories: 20/20 PASS
+- Implementation Authorization: NOT AUTHORIZED
+- Production Implementation: BLOCKED
+- Production Certification: NOT CLAIMED
+
+### Governance Boundary
+
+This decision changes Architecture Approval status only.
+It does not authorize Phase-B implementation.
+Implementation Authorization requires a separate governance decision.
