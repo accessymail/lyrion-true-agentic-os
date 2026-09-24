@@ -62,6 +62,8 @@ It SHALL NOT modify authorization, production, or certification state.
 - tools/phase_b/validate_pbdoc_021_negative_tests.py
 - tools/phase_b/audit_pbdoc_021_final.py
 - tools/phase_b/governance/record_phase_b_implementation_authorization.py
+- tools/phase_b/validate_phase_b_implementation_entry.py
+- tools/phase_b/validate_phase_b_implementation_entry_negative_tests.py
 
 Controlled validation: **10/10 PASS**
 
