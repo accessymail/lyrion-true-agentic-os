@@ -106,6 +106,7 @@ applicable governance and approval process.
 | PB-DOC-018 | Operations Specification | `docs/phase-b/operations/LYRION_UNIFIED_CORE_OPERATIONS_SPECIFICATION_v1.md` | CLOSED — BASELINE VALIDATED; IMPLEMENTATION VALIDATION PENDING |
 | PB-DOC-019 | Recovery / Resilience Specification | `docs/phase-b/recovery/LYRION_UNIFIED_CORE_RECOVERY_RESILIENCE_SPECIFICATION_v1.md` | CLOSED — BASELINE VALIDATED; IMPLEMENTATION VALIDATION PENDING |
 | PB-DOC-020 | Phase-B Master Manifest | `docs/phase-b/governance/LYRION_TRUE_AGENTIC_OS_PHASE_B_MASTER_MANIFEST_v1.md` | THIS DOCUMENT |
+| PB-DOC-021 | Implementation Authorization Gate Specification | `docs/phase-b/governance/LYRION_PHASE_B_IMPLEMENTATION_AUTHORIZATION_GATE_SPECIFICATION_v1.md` | CLOSED — BASELINE VALIDATED; IMPLEMENTATION VALIDATED |
 
 ---
 

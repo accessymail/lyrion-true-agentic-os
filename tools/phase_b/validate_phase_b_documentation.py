@@ -127,7 +127,7 @@ class Validator:
                 ),
                 (
                     "Architecture Approval",
-                    r"\*\*Architecture Approval:\*\*\s*PENDING",
+                    r"\*\*Architecture Approval:\*\*\s*APPROVED",
                 ),
                 (
                     "Implementation Authorization",
