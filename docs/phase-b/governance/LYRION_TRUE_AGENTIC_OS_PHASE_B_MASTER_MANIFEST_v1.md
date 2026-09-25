@@ -82,6 +82,19 @@ applicable governance and approval process.
 
 ---
 
+## R097 Implementation Validation Record
+
+R097 — Expired or revoked authority is not restored from checkpoint state has a validated implementation control slice. The validation record is:
+
+`docs/phase-b/execution-admission/r097/LYRION_R097_IMPLEMENTATION_VALIDATION_RECORD_v1.md`
+
+This record validates the R097 recovery-context, recovery-reentry, and fresh-admission control path. It does **not** constitute complete implementation validation of PB-DOC-009 as a whole.
+
+**R097 Validation Status:** PASS — CONTROL SLICE
+**PB-DOC-009 Overall Implementation Validation:** PENDING
+**Production Implementation:** BLOCKED
+**Production Certification:** NOT CLAIMED
+
 ## 5. Phase-B Documentation Registry
 
 | ID | Document | Path | Current State |

@@ -7,7 +7,8 @@ from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from lyrion.core.types import IdempotencyKey, OpportunityId, TaskId
+from lyrion.core.types import AutonomyLevel, CorrelationId, EventId, IdempotencyKey, OpportunityId, TaskId
+from lyrion.events.models import EventSensitivity, EventTrustLevel
 
 
 class RuntimeLifecycleState(StrEnum):
@@ -197,6 +198,39 @@ class PersistentScheduler(BaseModel):
 
         return value.astimezone(UTC)
 
+
+class OpportunityRecoveryContext(BaseModel):
+    """Immutable durable recovery context for R097 recovery.
+
+    Recovery restores work context and lineage only; execution authority
+    must always be re-established through fresh admission.
+    """
+    model_config = ConfigDict(frozen=True, extra="forbid")
+    opportunity_id: OpportunityId
+    correlation_id: CorrelationId | None
+    trigger_event_ids: tuple[EventId, ...]
+    source_provenance_ref: str
+    relevant_state_ids: tuple[str, ...]
+    goal_context: tuple[str, ...]
+    title: str
+    description: str
+    user_relevance: float
+    expected_benefit: float
+    interruption_cost: float
+    risk_score: float
+    reversibility: float
+    urgency: float
+    confidence: float
+    required_capabilities: tuple[str, ...]
+    required_autonomy_level: AutonomyLevel
+    sensitivity: EventSensitivity
+    trust_level: EventTrustLevel
+    original_status: str
+    created_at: datetime
+    expires_at: datetime | None
+    schema_version: str
+    context_revision: int
+    integrity_digest: str
 
 class PersistentExecutionRecord(BaseModel):
     """Durable identity and lifecycle record for one execution."""

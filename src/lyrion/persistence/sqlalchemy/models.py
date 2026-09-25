@@ -170,6 +170,98 @@ class PersistentOpportunityModel(Base):
     )
 
 
+class OpportunityRecoveryContextModel(Base):
+    """Immutable durable context required to reconstruct an opportunity after recovery."""
+
+    __tablename__ = "persistent_opportunity_recovery_context"
+    __table_args__ = (
+        Index(
+            "ix_persistent_opportunity_recovery_context_expires_at",
+            "expires_at",
+        ),
+    )
+
+    opportunity_id: Mapped[str] = mapped_column(
+        String(500),
+        primary_key=True,
+    )
+    correlation_id: Mapped[str | None] = mapped_column(
+        String(200),
+        nullable=True,
+    )
+    trigger_event_ids: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+    )
+    source_provenance_ref: Mapped[str] = mapped_column(
+        String(1000),
+        nullable=False,
+    )
+    relevant_state_ids: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+    )
+    goal_context: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+    )
+    title: Mapped[str] = mapped_column(
+        String(1000),
+        nullable=False,
+    )
+    description: Mapped[str] = mapped_column(
+        String(4000),
+        nullable=False,
+    )
+    user_relevance: Mapped[float] = mapped_column(nullable=False)
+    expected_benefit: Mapped[float] = mapped_column(nullable=False)
+    interruption_cost: Mapped[float] = mapped_column(nullable=False)
+    risk_score: Mapped[float] = mapped_column(nullable=False)
+    reversibility: Mapped[float] = mapped_column(nullable=False)
+    urgency: Mapped[float] = mapped_column(nullable=False)
+    confidence: Mapped[float] = mapped_column(nullable=False)
+    required_capabilities: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+    )
+    required_autonomy_level: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    sensitivity: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    trust_level: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    original_status: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    expires_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    schema_version: Mapped[str] = mapped_column(
+        String(64),
+        nullable=False,
+    )
+    context_revision: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    integrity_digest: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+
+
 class PersistentExecutionModel(Base):
     """Persistent execution lifecycle record."""
 

@@ -1,0 +1,143 @@
+"""Fail-closed reconstruction of Opportunities from R097 recovery context.
+
+This module restores durable work context only. It never restores
+authorization, admission, delegated authority, or execution authority.
+Fresh authorization/admission must occur after reconstruction.
+"""
+
+from __future__ import annotations
+
+from datetime import UTC, datetime
+
+from lyrion.piae.contracts import Opportunity
+from lyrion.persistence.opportunity_recovery_context import (
+    OpportunityRecoveryContextFactory,
+)
+from lyrion.persistence.protocols import OpportunityRecoveryContextStore
+
+
+class OpportunityRecoveryContextResolver:
+    """Resolve an immutable R097 context into a fresh Opportunity."""
+
+    def __init__(
+        self,
+        recovery_context_store: OpportunityRecoveryContextStore,
+    ) -> None:
+        self._recovery_context_store = recovery_context_store
+
+    async def resolve(
+        self,
+        opportunity_id: str,
+        *,
+        current_time: datetime,
+    ) -> Opportunity:
+        """Reconstruct an Opportunity after validating its durable context.
+
+        No authorization, admission, checkpoint authority, or execution
+        authority is restored by this method.
+        """
+        now = self._normalize_now(current_time)
+
+        if not opportunity_id.strip():
+            raise ValueError("opportunity_id must not be empty")
+
+        context = await self._recovery_context_store.get(opportunity_id)
+
+        if context is None:
+            raise ValueError(
+                "R097 recovery context does not exist",
+            )
+
+        if context.opportunity_id != opportunity_id:
+            raise ValueError(
+                "R097 recovery context identity mismatch",
+            )
+
+        if context.context_revision < 1:
+            raise ValueError(
+                "R097 recovery context revision must be positive",
+            )
+
+        if not context.schema_version.strip():
+            raise ValueError(
+                "R097 recovery context schema version is invalid",
+            )
+
+        if not context.source_provenance_ref.strip():
+            raise ValueError(
+                "R097 recovery context provenance is missing",
+            )
+
+        if context.expires_at is not None:
+            expires_at = self._normalize_datetime(context.expires_at)
+
+            if now >= expires_at:
+                raise ValueError(
+                    "R097 recovery context has expired",
+                )
+
+        opportunity = Opportunity.model_validate(
+            {
+                "opportunity_id": context.opportunity_id,
+                "correlation_id": context.correlation_id,
+                "trigger_event_ids": list(context.trigger_event_ids),
+                "relevant_state_ids": list(context.relevant_state_ids),
+                "goal_context": list(context.goal_context),
+                "title": context.title,
+                "description": context.description,
+                "user_relevance": context.user_relevance,
+                "expected_benefit": context.expected_benefit,
+                "interruption_cost": context.interruption_cost,
+                "risk_score": context.risk_score,
+                "reversibility": context.reversibility,
+                "urgency": context.urgency,
+                "confidence": context.confidence,
+                "required_capabilities": list(
+                    context.required_capabilities,
+                ),
+                "required_autonomy_level": context.required_autonomy_level,
+                "sensitivity": context.sensitivity,
+                "trust_level": context.trust_level,
+                "status": context.original_status,
+                "created_at": context.created_at,
+                "expires_at": context.expires_at,
+            }
+        )
+
+        verified_context = (
+            OpportunityRecoveryContextFactory.from_opportunity(
+                opportunity,
+                source_provenance_ref=context.source_provenance_ref,
+                context_revision=context.context_revision,
+            )
+        )
+
+        if verified_context.integrity_digest != context.integrity_digest:
+            raise ValueError(
+                "R097 recovery context integrity verification failed",
+            )
+
+        if verified_context.opportunity_id != opportunity.opportunity_id:
+            raise ValueError(
+                "R097 reconstructed Opportunity identity mismatch",
+            )
+
+        return opportunity
+
+    @staticmethod
+    def _normalize_now(now: datetime) -> datetime:
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError(
+                "current_time must be timezone-aware",
+            )
+
+        return now.astimezone(UTC)
+
+    @staticmethod
+    def _normalize_datetime(value: datetime) -> datetime:
+        if value.tzinfo is None or value.utcoffset() is None:
+            raise ValueError(
+                "R097 recovery context timestamp must be timezone-aware",
+            )
+
+        return value.astimezone(UTC)

@@ -15,6 +15,7 @@ from lyrion.persistence.sqlalchemy.opportunity_store import (
     SQLAlchemyOpportunityStore,
 )
 from lyrion.persistence.sqlalchemy.recovery_store import SQLAlchemyRecoveryStore
+from lyrion.persistence.sqlalchemy.opportunity_recovery_context_store import SQLAlchemyOpportunityRecoveryContextStore
 from lyrion.persistence.sqlalchemy.runtime_store import SQLAlchemyRuntimeStore
 from lyrion.persistence.sqlalchemy.scheduler_store import SQLAlchemySchedulerStore
 from lyrion.persistence.sqlalchemy.voice_identity_profile_store import (
@@ -39,6 +40,7 @@ class SQLAlchemyPersistenceUnitOfWork:
         self._executions: SQLAlchemyExecutionStore | None = None
         self._idempotency: SQLAlchemyIdempotencyStore | None = None
         self._recovery: SQLAlchemyRecoveryStore | None = None
+        self._opportunity_recovery_context: SQLAlchemyOpportunityRecoveryContextStore | None = None
         self._scheduler: SQLAlchemySchedulerStore | None = None
         self._voice_identity: SQLAlchemyVoiceIdentityProfileStore | None = None
 
@@ -72,6 +74,11 @@ class SQLAlchemyPersistenceUnitOfWork:
         )
         self._recovery = SQLAlchemyRecoveryStore._from_session(
             self._session,
+        )
+        self._opportunity_recovery_context = (
+            SQLAlchemyOpportunityRecoveryContextStore._from_session(
+                self._session,
+            )
         )
         self._scheduler = SQLAlchemySchedulerStore._from_session(
             self._session,
@@ -111,6 +118,7 @@ class SQLAlchemyPersistenceUnitOfWork:
             self._executions = None
             self._idempotency = None
             self._recovery = None
+            self._opportunity_recovery_context = None
             self._scheduler = None
             self._voice_identity = None
 
@@ -173,6 +181,18 @@ class SQLAlchemyPersistenceUnitOfWork:
             )
 
         return self._recovery
+
+    @property
+    def opportunity_recovery_context(
+        self,
+    ) -> SQLAlchemyOpportunityRecoveryContextStore:
+        """Return the opportunity recovery-context store within the transaction."""
+        if self._opportunity_recovery_context is None:
+            raise RuntimeError(
+                "persistence unit of work is not active"
+            )
+
+        return self._opportunity_recovery_context
 
     @property
     def voice_identity(self) -> SQLAlchemyVoiceIdentityProfileStore:

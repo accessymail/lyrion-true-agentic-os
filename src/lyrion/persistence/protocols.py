@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import Protocol
 
 from lyrion.persistence.contracts import (
+    OpportunityRecoveryContext,
     PersistentExecutionRecord,
     PersistentExecutionState,
     PersistentIdempotencyRecord,
@@ -282,6 +283,28 @@ class IdempotencyStore(Protocol):
         idempotency_key: str,
     ) -> bool:
         """Return whether an idempotency key is already registered."""
+
+
+class OpportunityRecoveryContextStore(Protocol):
+    """Durable immutable recovery-context boundary."""
+
+    async def create(
+        self,
+        context: OpportunityRecoveryContext,
+    ) -> OpportunityRecoveryContext:
+        """Atomically persist one immutable recovery context."""
+
+    async def get(
+        self,
+        opportunity_id: str,
+    ) -> OpportunityRecoveryContext | None:
+        """Return one recovery context by opportunity identifier."""
+
+    async def exists(
+        self,
+        opportunity_id: str,
+    ) -> bool:
+        """Return whether recovery context exists for an opportunity."""
 
 
 class RecoveryStore(Protocol):
