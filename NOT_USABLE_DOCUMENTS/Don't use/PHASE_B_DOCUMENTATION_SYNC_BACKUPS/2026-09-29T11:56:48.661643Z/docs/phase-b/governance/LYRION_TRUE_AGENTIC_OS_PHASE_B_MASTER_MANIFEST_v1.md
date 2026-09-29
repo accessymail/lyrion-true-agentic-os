@@ -1,6 +1,6 @@
 # LYRION TRUE AGENTIC OS — PHASE B MASTER MANIFEST
 
-**Document ID:** TAOS-PHASE-B-MANIFEST-001 
+**Document ID:** TAOS-PHASE-B-MANIFEST-001
 **Version:** 1.0.0
 **Date:** 2026-09-22
 **Status:** DRAFT — PHASE-B DOCUMENTATION MASTER MANIFEST
@@ -739,18 +739,3 @@ documentation/governance baseline.
 
 It does not authorize credential provisioning, mechanism selection,
 implementation, production deployment, or production certification.
-
-## Controlled Execution Admission Slice Validation Record
-
-- Bounded slice: `Execution Admission`
-- State: `EXECUTION_ADMISSION_SLICE_ACCEPTED`
-- Runtime compilation: `4/4 PASS`
-- Controlled validation: `86 PASSED / 0 FAILED`
-- Evidence review: `CONTROLLED_VALIDATION_EVIDENCE_VERIFIED`
-- Full PB-DOC-009 validation: `NOT CLAIMED`
-- Production implementation: `BLOCKED`
-- Production certification: `NOT CLAIMED`
-- G46.5/G47 reconstruction: `NOT PERFORMED`
-- R097 modification: `NOT PERFORMED`
-- Acceptance record:
-  `docs/phase-b/validation/EXECUTION_ADMISSION_SLICE_ACCEPTANCE_RECORD_v1.md`

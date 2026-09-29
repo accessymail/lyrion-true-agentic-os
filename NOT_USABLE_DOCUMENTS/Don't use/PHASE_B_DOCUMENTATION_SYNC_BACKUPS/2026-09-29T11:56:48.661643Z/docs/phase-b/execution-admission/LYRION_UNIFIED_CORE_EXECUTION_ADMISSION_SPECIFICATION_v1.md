@@ -898,20 +898,3 @@ The canonical governed execution relationship remains:
 **Human Intent → Lyri Interpretation → Task → Agent Delegation → Aegis → Capability Authorization → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host/Application → Independent Verification → Memory/Audit/Provenance → Lyri → Human**
 
 No alternate privileged execution path SHALL be introduced.
-
-## Controlled Implementation-Validation Slice Record
-
-The bounded Execution Admission implementation-validation slice has
-evidence-backed acceptance.
-
-- Runtime compilation: `4/4 PASS`
-- Tests: `86 PASSED / 0 FAILED`
-- Evidence review: `CONTROLLED_VALIDATION_EVIDENCE_VERIFIED`
-- Slice acceptance: `EXECUTION_ADMISSION_SLICE_ACCEPTED`
-- Full PB-DOC-009 validation: `NOT CLAIMED`
-- Production implementation: `BLOCKED`
-- Production certification: `NOT CLAIMED`
-
-Acceptance record:
-
-`docs/phase-b/validation/EXECUTION_ADMISSION_SLICE_ACCEPTANCE_RECORD_v1.md`
