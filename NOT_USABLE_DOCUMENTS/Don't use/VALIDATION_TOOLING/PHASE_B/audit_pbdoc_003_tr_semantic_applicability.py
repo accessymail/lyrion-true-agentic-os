@@ -1,0 +1,1065 @@
+#!/usr/bin/env python3
+"""
+LYRION True Agentic OS
+Phase-B TR-Specific Semantic Applicability / Evidence Audit
+Target: PB-DOC-003 — Identity & Authority
+
+Purpose
+-------
+Perform a READ-ONLY semantic audit of PB-DOC-003 against TR-001..TR-009.
+
+This tool:
+  - discovers authoritative TR definitions from existing Phase-B documents
+  - extracts TR-specific obligations/evidence concepts
+  - inspects PB-DOC-003
+  - evaluates applicability separately from coverage
+  - identifies supporting evidence and requirement identifiers
+  - reports DIRECT / SUFFICIENT / PARTIAL / ABSENT coverage
+  - reports APPLICABLE / NOT_APPLICABLE / REVIEW_REQUIRED applicability
+  - emits evidence line numbers for human review
+
+This tool MUST NOT:
+  - modify any Phase-B document
+  - modify the Gap Register
+  - modify the Master Manifest
+  - modify governance state
+  - close any Gap Register entry
+  - grant Architecture Approval
+  - grant Implementation Authorization
+  - authorize production implementation
+  - claim production certification
+
+Exit codes
+----------
+0 = audit completed; no unresolved blocking semantic findings
+1 = review required / incomplete semantic evidence
+2 = runtime/configuration failure
+"""
+
+from __future__ import annotations
+
+import re
+import sys
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Iterable
+
+
+# ---------------------------------------------------------------------------
+# Repository configuration
+# ---------------------------------------------------------------------------
+
+REPO_ROOT = Path("/home/aniket/lyrion-migration-verified")
+
+PB_DOC_003 = (
+    REPO_ROOT
+    / "docs/phase-b/identity-authority/"
+    "LYRION_UNIFIED_CORE_AGENT_IDENTITY_AUTHORITY_SPECIFICATION_v1.md"
+)
+
+# Canonical sources known to contain authoritative TR definitions.
+TR_SOURCE_CANDIDATES = [
+    REPO_ROOT
+    / "docs/phase-b/requirements/"
+    "LYRION_CORE_PRD_TRACEABILITY_ACCEPTANCE_MATRIX_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/execution-admission/"
+    "LYRION_UNIFIED_CORE_EXECUTION_ADMISSION_SPECIFICATION_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/secure-execution/"
+    "LYRION_UNIFIED_CORE_SECURE_EXECUTION_SPECIFICATION_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/interfaces/"
+    "LYRION_UNIFIED_CORE_INTERFACE_CONTRACT_SPECIFICATION_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/validation/"
+    "LYRION_UNIFIED_CORE_VALIDATION_SPECIFICATION_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/security-testing/"
+    "LYRION_UNIFIED_CORE_SECURITY_TESTING_SPECIFICATION_v1.md",
+    REPO_ROOT
+    / "docs/phase-b/governance/"
+    "LYRION_TRUE_AGENTIC_OS_PHASE_B_MASTER_MANIFEST_v1.md",
+]
+
+
+# ---------------------------------------------------------------------------
+# Data models
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class TRDefinition:
+    tr_id: str
+    source: Path
+    line_start: int
+    line_end: int
+    text: str
+
+
+@dataclass
+class TREvaluation:
+    tr_id: str
+    definitions: list[TRDefinition] = field(default_factory=list)
+
+    applicability: str = "REVIEW_REQUIRED"
+    coverage: str = "ABSENT"
+
+    rationale: str = ""
+
+    evidence_terms: list[str] = field(default_factory=list)
+    evidence_lines: list[int] = field(default_factory=list)
+    requirement_ids: list[str] = field(default_factory=list)
+
+    direct_reference: bool = False
+    semantic_evidence: bool = False
+
+    review_reasons: list[str] = field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
+# Generic helpers
+# ---------------------------------------------------------------------------
+
+TR_IDS = [f"TR-{i:03d}" for i in range(1, 10)]
+
+REQUIREMENT_ID_RE = re.compile(
+    r"\b(?:"
+    r"CORE-[A-Z0-9-]+"
+    r"|IDENTITY-[A-Z0-9-]+"
+    r"|AUTHORITY-[A-Z0-9-]+"
+    r"|AG-[0-9]{3}"
+    r"|DOC-[0-9]{3}"
+    r"|PB-DOC-[0-9]{3}"
+    r"|EXEC-[0-9]{3}"
+    r"|VAL-[0-9]{3}"
+    r"|SEC-[0-9]{3}"
+    r"|OBS-[0-9]{3}"
+    r"|RMA-[A-Z0-9-]+"
+    r"|RLM-[A-Z0-9-]+"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def normalize(text: str) -> str:
+    return re.sub(r"\s+", " ", text.strip()).lower()
+
+
+def read_lines(path: Path) -> list[str]:
+    return path.read_text(encoding="utf-8").splitlines()
+
+
+def numbered_text(lines: list[str]) -> str:
+    return "\n".join(
+        f"{idx + 1}: {line}"
+        for idx, line in enumerate(lines)
+    )
+
+
+def print_header(title: str) -> None:
+    print()
+    print("=" * 88)
+    print(title)
+    print("=" * 88)
+
+
+def print_status(label: str, value: str) -> None:
+    print(f"{label:<32}: {value}")
+
+
+# ---------------------------------------------------------------------------
+# TR definition discovery
+# ---------------------------------------------------------------------------
+
+def extract_tr_windows(
+    lines: list[str],
+    tr_id: str,
+    window_before: int = 3,
+    window_after: int = 35,
+) -> list[TRDefinition]:
+    """
+    Extract bounded windows around explicit TR identifiers.
+
+    We deliberately retain the source and line range so semantic decisions
+    can be reviewed against the actual authoritative source.
+    """
+    definitions: list[TRDefinition] = []
+
+    pattern = re.compile(rf"\b{re.escape(tr_id)}\b", re.IGNORECASE)
+
+    for idx, line in enumerate(lines):
+        if not pattern.search(line):
+            continue
+
+        start = max(0, idx - window_before)
+        end = min(len(lines), idx + window_after)
+
+        block = "\n".join(lines[start:end]).strip()
+
+        definitions.append(
+            TRDefinition(
+                tr_id=tr_id,
+                source=Path("<unknown>"),
+                line_start=start + 1,
+                line_end=end,
+                text=block,
+            )
+        )
+
+    return definitions
+
+
+def discover_tr_definitions() -> dict[str, list[TRDefinition]]:
+    result: dict[str, list[TRDefinition]] = {tr: [] for tr in TR_IDS}
+
+    for source in TR_SOURCE_CANDIDATES:
+        if not source.is_file():
+            continue
+
+        lines = read_lines(source)
+
+        for tr_id in TR_IDS:
+            windows = extract_tr_windows(lines, tr_id)
+
+            for definition in windows:
+                result[tr_id].append(
+                    TRDefinition(
+                        tr_id=definition.tr_id,
+                        source=source,
+                        line_start=definition.line_start,
+                        line_end=definition.line_end,
+                        text=definition.text,
+                    )
+                )
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# TR-specific semantic vocabulary
+# ---------------------------------------------------------------------------
+
+# These are semantic anchors, not automatic proof.
+#
+# The evaluator requires actual evidence in PB-DOC-003 and reports the
+# evidence so a human can confirm whether the semantic relationship is valid.
+
+TR_CONCEPTS: dict[str, list[str]] = {
+    "TR-001": [
+        "requirements traceability",
+        "requirements",
+        "identity",
+        "authority",
+        "authorization",
+        "delegation",
+        "least privilege",
+        "verification",
+    ],
+    "TR-002": [
+        "agent identity",
+        "authority",
+        "delegated authority",
+        "attenuation",
+        "revocation",
+        "revalidation",
+        "least privilege",
+    ],
+    "TR-003": [
+        "capability",
+        "capability authorization",
+        "capability boundary",
+        "authorization",
+        "execution admission",
+        "authority",
+        "least privilege",
+    ],
+    "TR-004": [
+        "memory",
+        "data integrity",
+        "provenance",
+        "integrity",
+        "authorization",
+        "authority",
+    ],
+    "TR-005": [
+        "execution",
+        "secure execution",
+        "execution admission",
+        "authority",
+        "authorization",
+        "verification",
+        "provenance",
+    ],
+    "TR-006": [
+        "agent swarm",
+        "swarm governance",
+        "agent-to-agent",
+        "delegation",
+        "authority",
+        "capability",
+        "resource",
+        "cancellation",
+        "revocation",
+    ],
+    "TR-007": [
+        "observability",
+        "audit",
+        "telemetry",
+        "provenance",
+        "event",
+        "verification",
+    ],
+    "TR-008": [
+        "validation",
+        "verification",
+        "acceptance",
+        "requirements",
+        "traceability",
+    ],
+    "TR-009": [
+        "security testing",
+        "threat",
+        "security",
+        "authorization",
+        "authority",
+        "least privilege",
+        "revocation",
+        "fail closed",
+    ],
+}
+
+
+# Concepts that strongly indicate PB-DOC-003's architectural ownership.
+IDENTITY_AUTHORITY_OWNERSHIP = [
+    "identity",
+    "authority",
+    "authority attenuation",
+    "least privilege",
+    "delegated authority",
+    "delegation",
+    "revocation",
+    "revalidation",
+    "capability separation",
+    "execution separation",
+    "verification",
+    "provenance",
+    "fail-closed",
+]
+
+
+# ---------------------------------------------------------------------------
+# Evidence extraction
+# ---------------------------------------------------------------------------
+
+def find_term_lines(
+    lines: list[str],
+    terms: Iterable[str],
+) -> dict[str, list[int]]:
+    found: dict[str, list[int]] = {}
+
+    normalized_lines = [normalize(line) for line in lines]
+
+    for term in terms:
+        needle = normalize(term)
+        hits = [
+            idx + 1
+            for idx, line in enumerate(normalized_lines)
+            if needle in line
+        ]
+
+        if hits:
+            found[term] = hits
+
+    return found
+
+
+def collect_requirement_ids(lines: list[str]) -> list[str]:
+    ids: set[str] = set()
+
+    for line in lines:
+        for match in REQUIREMENT_ID_RE.findall(line):
+            ids.add(match.upper())
+
+    return sorted(ids)
+
+
+def has_direct_tr_reference(
+    lines: list[str],
+    tr_id: str,
+) -> bool:
+    pattern = re.compile(rf"\b{re.escape(tr_id)}\b", re.IGNORECASE)
+    return any(pattern.search(line) for line in lines)
+
+
+# ---------------------------------------------------------------------------
+# TR definition interpretation
+# ---------------------------------------------------------------------------
+
+def definition_keywords(definitions: list[TRDefinition]) -> set[str]:
+    """
+    Extract meaningful lower-case phrases from authoritative definition
+    windows.
+
+    This is intentionally conservative. It does not claim that every
+    discovered word is a requirement.
+    """
+    keywords: set[str] = set()
+
+    for definition in definitions:
+        text = normalize(definition.text)
+
+        for phrase in (
+            "identity",
+            "authority",
+            "authorization",
+            "capability",
+            "execution",
+            "verification",
+            "provenance",
+            "memory",
+            "data integrity",
+            "observability",
+            "audit",
+            "validation",
+            "security testing",
+            "agent swarm",
+            "delegation",
+            "least privilege",
+            "revocation",
+            "revalidation",
+            "resource",
+            "cancellation",
+            "requirements traceability",
+            "fail closed",
+        ):
+            if phrase in text:
+                keywords.add(phrase)
+
+    return keywords
+
+
+# ---------------------------------------------------------------------------
+# Applicability analysis
+# ---------------------------------------------------------------------------
+
+def evaluate_applicability(
+    tr_id: str,
+    definitions: list[TRDefinition],
+    pb_lines: list[str],
+) -> tuple[str, str]:
+    """
+    Determine whether PB-DOC-003 appears to own/support the TR.
+
+    This is deliberately conservative:
+      - APPLICABLE only when the TR's authoritative definition materially
+        concerns identity/authority or an explicit dependency on it.
+      - NOT_APPLICABLE only when the TR is clearly owned elsewhere and
+        PB-DOC-003 has no substantive obligation for it.
+      - otherwise REVIEW_REQUIRED.
+    """
+
+    tr_text = normalize(
+        "\n".join(definition.text for definition in definitions)
+    )
+
+    pb_text = normalize("\n".join(pb_lines))
+
+    identity_authority_terms = [
+        "identity",
+        "authority",
+        "authorization",
+        "delegation",
+        "least privilege",
+        "revocation",
+        "revalidation",
+    ]
+
+    strong_identity_authority_signal = sum(
+        term in tr_text for term in identity_authority_terms
+    )
+
+    pb_has_related_architecture = any(
+        term in pb_text for term in IDENTITY_AUTHORITY_OWNERSHIP
+    )
+
+    if strong_identity_authority_signal >= 3 and pb_has_related_architecture:
+        return (
+            "APPLICABLE",
+            "Authoritative TR definition materially intersects identity/"
+            "authority/authorization concerns and PB-DOC-003 contains "
+            "substantive identity-authority architecture evidence.",
+        )
+
+    # TRs primarily owned by other documents are not automatically failures
+    # for PB-DOC-003. They require review to distinguish dependency from
+    # ownership.
+    primary_external_domains = {
+        "TR-004": ["memory", "data integrity"],
+        "TR-007": ["observability"],
+        "TR-008": ["validation"],
+        "TR-009": ["security testing"],
+    }
+
+    if tr_id in primary_external_domains:
+        domains = primary_external_domains[tr_id]
+
+        if any(domain in tr_text for domain in domains):
+            return (
+                "REVIEW_REQUIRED",
+                "TR is primarily concerned with a domain owned by another "
+                "Phase-B specification, but identity/authority may be a "
+                "dependency. Ownership versus supporting applicability "
+                "requires semantic review.",
+            )
+
+    if definitions:
+        return (
+            "REVIEW_REQUIRED",
+            "Authoritative TR definition exists, but applicability to "
+            "PB-DOC-003 cannot be established safely from generic vocabulary "
+            "alone.",
+        )
+
+    return (
+        "REVIEW_REQUIRED",
+        "No authoritative TR definition was discovered from configured "
+        "Phase-B sources.",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Coverage analysis
+# ---------------------------------------------------------------------------
+
+def evaluate_coverage(
+    tr_id: str,
+    applicability: str,
+    pb_lines: list[str],
+    definitions: list[TRDefinition],
+) -> tuple[str, list[str], list[int], list[str], str]:
+    concepts = TR_CONCEPTS[tr_id]
+
+    term_lines = find_term_lines(pb_lines, concepts)
+
+    evidence_terms = sorted(term_lines.keys())
+    evidence_lines = sorted(
+        {
+            line_no
+            for line_numbers in term_lines.values()
+            for line_no in line_numbers
+        }
+    )
+
+    requirement_ids = collect_requirement_ids(
+        [
+            pb_lines[line_no - 1]
+            for line_no in evidence_lines
+            if 1 <= line_no <= len(pb_lines)
+        ]
+    )
+
+    direct_reference = has_direct_tr_reference(pb_lines, tr_id)
+
+    # Do not call generic keyword presence "coverage" unless applicability
+    # has already been established.
+    if applicability == "NOT_APPLICABLE":
+        return (
+            "NOT_APPLICABLE",
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            "PB-DOC-003 is not an owning/supporting document for this TR.",
+        )
+
+    if not definitions:
+        return (
+            "ABSENT",
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            "No authoritative TR definition was discovered; coverage cannot "
+            "be established.",
+        )
+
+    # Direct reference + substantive identity/authority evidence.
+    if direct_reference and len(evidence_terms) >= 3:
+        return (
+            "DIRECT",
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            "PB-DOC-003 directly references the TR and contains multiple "
+            "substantive semantic evidence anchors.",
+        )
+
+    # Strong evidence even without literal TR identifier.
+    strong_terms = {
+        "identity",
+        "authority",
+        "authorization",
+        "delegation",
+        "least privilege",
+        "revocation",
+        "revalidation",
+    }
+
+    strong_hits = len(strong_terms.intersection(evidence_terms))
+
+    if strong_hits >= 5:
+        return (
+            "SUFFICIENT",
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            "PB-DOC-003 contains substantial identity/authority evidence "
+            "that may satisfy or materially support the TR; semantic review "
+            "is still required before treating this as formal traceability.",
+        )
+
+    if len(evidence_terms) >= 2:
+        return (
+            "PARTIAL",
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            "PB-DOC-003 contains related evidence, but the available "
+            "evidence does not establish complete TR-specific coverage.",
+        )
+
+    return (
+        "ABSENT",
+        evidence_terms,
+        evidence_lines,
+        requirement_ids,
+        "No sufficient TR-specific semantic evidence was identified in "
+        "PB-DOC-003.",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Human-review evidence excerpts
+# ---------------------------------------------------------------------------
+
+def print_evidence_excerpts(
+    pb_lines: list[str],
+    line_numbers: list[int],
+    max_excerpts: int = 12,
+) -> None:
+    if not line_numbers:
+        print("    Evidence excerpts       : NONE")
+        return
+
+    print("    Evidence excerpts:")
+
+    for line_no in line_numbers[:max_excerpts]:
+        start = max(1, line_no - 1)
+        end = min(len(pb_lines), line_no + 1)
+
+        for idx in range(start, end + 1):
+            marker = ">>" if idx == line_no else "  "
+            print(
+                f"      {marker} {idx:04d}: "
+                f"{pb_lines[idx - 1].rstrip()}"
+            )
+
+
+# ---------------------------------------------------------------------------
+# Governance safety verification
+# ---------------------------------------------------------------------------
+
+def verify_governance_safety() -> bool:
+    """
+    Verify the Phase-B governance state without assuming a particular
+    Markdown formatting style.
+
+    This function is intentionally tolerant of:
+      - bold Markdown field names
+      - whitespace variations
+      - table/list formatting
+      - optional Markdown punctuation
+
+    It still requires the exact governance values.
+
+    READ-ONLY:
+      - does not modify the manifest
+      - does not modify any Phase-B document
+      - does not change authorization state
+    """
+
+    manifest = (
+        REPO_ROOT
+        / "docs/phase-b/governance/"
+        "LYRION_TRUE_AGENTIC_OS_PHASE_B_MASTER_MANIFEST_v1.md"
+    )
+
+    if not manifest.is_file():
+        print_status(
+            "Governance safety",
+            "UNVERIFIABLE — manifest missing",
+        )
+        return False
+
+    text = manifest.read_text(encoding="utf-8")
+
+    # Normalize Markdown formatting and whitespace before matching.
+    #
+    # Example:
+    #   **Architecture Approval:** PENDING
+    # becomes:
+    #   Architecture Approval: PENDING
+    normalized = re.sub(r"[*_`]", "", text)
+    normalized = re.sub(r"[ \t]+", " ", normalized)
+
+    expected = {
+        "Architecture Approval": "PENDING",
+        "Implementation Authorization": "NOT AUTHORIZED",
+        "Production Implementation": "BLOCKED",
+        "Production Certification": "NOT CLAIMED",
+    }
+
+    results: dict[str, bool] = {}
+
+    for field, expected_value in expected.items():
+        # Permit Markdown/list/table punctuation between the field and value.
+        pattern = re.compile(
+            rf"(?im)^\s*"
+            rf"(?:[-+>]\s*)?"
+            rf"(?:\|\s*)?"
+            rf"{re.escape(field)}"
+            rf"\s*(?::|\||=|-)\s*"
+            rf"{re.escape(expected_value)}"
+            rf"\s*(?:\|)?\s*$"
+        )
+
+        found = bool(pattern.search(normalized))
+        results[field] = found
+
+        print(
+            f"    {field:<32}: "
+            f"{'PASS' if found else 'FAIL'} "
+            f"(expected: {expected_value})"
+        )
+
+    ok = all(results.values())
+
+    print_status(
+        "Governance safety",
+        "PASS" if ok else "FAIL",
+    )
+
+    return ok
+
+
+# ---------------------------------------------------------------------------
+# Main audit
+# ---------------------------------------------------------------------------
+
+def main() -> int:
+    print_header(
+        "LYRION TRUE AGENTIC OS — PB-DOC-003 "
+        "TR-001..TR-009 SEMANTIC AUDIT"
+    )
+
+    print_status("Repository", str(REPO_ROOT))
+    print_status("Target", "PB-DOC-003 — Identity / Authority")
+    print_status("Mode", "READ-ONLY")
+    print_status("TR scope", "TR-001..TR-009")
+
+    if not REPO_ROOT.is_dir():
+        print_status("Repository validation", "FAIL — repository missing")
+        return 2
+
+    if not PB_DOC_003.is_file():
+        print_status("PB-DOC-003 validation", "FAIL — canonical document missing")
+        return 2
+
+    pb_lines = read_lines(PB_DOC_003)
+
+    print_status(
+        "PB-DOC-003 lines",
+        str(len(pb_lines)),
+    )
+
+    # ---------------------------------------------------------------
+    # Discover authoritative TR definitions
+    # ---------------------------------------------------------------
+
+    print_header("1. AUTHORITATIVE TR DEFINITION DISCOVERY")
+
+    definitions = discover_tr_definitions()
+
+    for tr_id in TR_IDS:
+        defs = definitions[tr_id]
+
+        if not defs:
+            print(f"{tr_id}: MISSING")
+            continue
+
+        print(f"{tr_id}: {len(defs)} source occurrence(s)")
+
+        # Show only distinct sources.
+        seen: set[Path] = set()
+
+        for definition in defs:
+            if definition.source in seen:
+                continue
+
+            seen.add(definition.source)
+
+            print(
+                f"    {definition.source.relative_to(REPO_ROOT)}:"
+                f"{definition.line_start}-{definition.line_end}"
+            )
+
+    # ---------------------------------------------------------------
+    # Evaluate each TR
+    # ---------------------------------------------------------------
+
+    evaluations: list[TREvaluation] = []
+
+    print_header("2. TR-SPECIFIC SEMANTIC APPLICABILITY / COVERAGE")
+
+    for tr_id in TR_IDS:
+        defs = definitions[tr_id]
+
+        applicability, applicability_reason = evaluate_applicability(
+            tr_id,
+            defs,
+            pb_lines,
+        )
+
+        (
+            coverage,
+            evidence_terms,
+            evidence_lines,
+            requirement_ids,
+            coverage_reason,
+        ) = evaluate_coverage(
+            tr_id,
+            applicability,
+            pb_lines,
+            defs,
+        )
+
+        evaluation = TREvaluation(
+            tr_id=tr_id,
+            definitions=defs,
+            applicability=applicability,
+            coverage=coverage,
+            rationale=coverage_reason,
+            evidence_terms=evidence_terms,
+            evidence_lines=evidence_lines,
+            requirement_ids=requirement_ids,
+            direct_reference=has_direct_tr_reference(pb_lines, tr_id),
+            semantic_evidence=bool(evidence_terms),
+        )
+
+        if applicability == "REVIEW_REQUIRED":
+            evaluation.review_reasons.append(applicability_reason)
+
+        if coverage in {"PARTIAL", "ABSENT"}:
+            evaluation.review_reasons.append(coverage_reason)
+
+        evaluations.append(evaluation)
+
+        print()
+        print(f"{tr_id}")
+        print(f"  Applicability : {applicability}")
+        print(f"  Coverage      : {coverage}")
+        print(
+            "  Direct TR ref : "
+            f"{'YES' if evaluation.direct_reference else 'NO'}"
+        )
+        print(
+            "  Semantic ev.  : "
+            f"{'YES' if evaluation.semantic_evidence else 'NO'}"
+        )
+
+        print(
+            "  Evidence terms: "
+            + (
+                ", ".join(evidence_terms)
+                if evidence_terms
+                else "NONE"
+            )
+        )
+
+        print(
+            "  Requirement IDs: "
+            + (
+                ", ".join(requirement_ids)
+                if requirement_ids
+                else "NONE"
+            )
+        )
+
+        print(
+            "  Evidence lines: "
+            + (
+                ", ".join(map(str, evidence_lines[:25]))
+                if evidence_lines
+                else "NONE"
+            )
+        )
+
+        print(f"  Applicability rationale: {applicability_reason}")
+        print(f"  Coverage rationale      : {coverage_reason}")
+
+        print_evidence_excerpts(
+            pb_lines,
+            evidence_lines,
+        )
+
+    # ---------------------------------------------------------------
+    # Summary
+    # ---------------------------------------------------------------
+
+    print_header("3. SEMANTIC AUDIT SUMMARY")
+
+    applicability_counts: dict[str, int] = {}
+    coverage_counts: dict[str, int] = {}
+
+    for evaluation in evaluations:
+        applicability_counts[evaluation.applicability] = (
+            applicability_counts.get(evaluation.applicability, 0) + 1
+        )
+
+        coverage_counts[evaluation.coverage] = (
+            coverage_counts.get(evaluation.coverage, 0) + 1
+        )
+
+    print("Applicability:")
+    for key in (
+        "APPLICABLE",
+        "NOT_APPLICABLE",
+        "REVIEW_REQUIRED",
+    ):
+        print(
+            f"  {key:<20}: "
+            f"{applicability_counts.get(key, 0)}"
+        )
+
+    print()
+    print("Coverage:")
+    for key in (
+        "DIRECT",
+        "SUFFICIENT",
+        "PARTIAL",
+        "ABSENT",
+        "NOT_APPLICABLE",
+    ):
+        print(
+            f"  {key:<20}: "
+            f"{coverage_counts.get(key, 0)}"
+        )
+
+    print()
+    print("TR result matrix:")
+    print()
+    print(
+        f"{'TR':<8}"
+        f"{'Applicability':<20}"
+        f"{'Coverage':<15}"
+        f"{'Direct Ref':<13}"
+        f"{'Semantic Evidence':<20}"
+    )
+    print("-" * 76)
+
+    for evaluation in evaluations:
+        print(
+            f"{evaluation.tr_id:<8}"
+            f"{evaluation.applicability:<20}"
+            f"{evaluation.coverage:<15}"
+            f"{'YES' if evaluation.direct_reference else 'NO':<13}"
+            f"{'YES' if evaluation.semantic_evidence else 'NO':<20}"
+        )
+
+    # ---------------------------------------------------------------
+    # Human-review determination
+    # ---------------------------------------------------------------
+
+    review_required = [
+        evaluation
+        for evaluation in evaluations
+        if (
+            evaluation.applicability == "REVIEW_REQUIRED"
+            or evaluation.coverage in {"PARTIAL", "ABSENT"}
+        )
+    ]
+
+    print()
+    print(f"TR evaluations requiring human review: {len(review_required)}")
+
+    for evaluation in review_required:
+        print(
+            f"  - {evaluation.tr_id}: "
+            f"{evaluation.applicability} / {evaluation.coverage}"
+        )
+
+    # ---------------------------------------------------------------
+    # Governance safety
+    # ---------------------------------------------------------------
+
+    print_header("4. GOVERNANCE SAFETY")
+
+    governance_ok = verify_governance_safety()
+
+    print()
+    print("Required governance state:")
+    print("  Architecture Approval       = PENDING")
+    print("  Implementation Authorization= NOT AUTHORIZED")
+    print("  Production Implementation   = BLOCKED")
+    print("  Production Certification    = NOT CLAIMED")
+
+    # ---------------------------------------------------------------
+    # Read-only guarantee
+    # ---------------------------------------------------------------
+
+    print_header("5. READ-ONLY GUARANTEE")
+
+    print("Documents modified : NO")
+    print("Gap Register modified: NO")
+    print("Master Manifest modified: NO")
+    print("Governance changed : NO")
+    print("Architecture approved: NO")
+    print("Implementation authorized: NO")
+    print("Production implementation authorized: NO")
+    print("Production certification claimed: NO")
+
+    # ---------------------------------------------------------------
+    # Final result
+    # ---------------------------------------------------------------
+
+    print_header("6. FINAL RESULT")
+
+    if not governance_ok:
+        print("RESULT: SAFETY FAILURE — GOVERNANCE STATE IS NOT SAFE.")
+        return 2
+
+    if review_required:
+        print(
+            "RESULT: REVIEW REQUIRED — "
+            f"{len(review_required)} TR semantic findings remain unresolved."
+        )
+        print()
+        print(
+            "IMPORTANT: This result does NOT authorize implementation "
+            "and does NOT close any Gap Register entry."
+        )
+        return 1
+
+    print(
+        "RESULT: SEMANTIC AUDIT PASSED — "
+        "NO UNRESOLVED TR-SPECIFIC FINDINGS."
+    )
+    print()
+    print(
+        "IMPORTANT: This result is evidence only. It does NOT grant "
+        "Architecture Approval or Implementation Authorization."
+    )
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
