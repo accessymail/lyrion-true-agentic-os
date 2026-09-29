@@ -1,0 +1,17 @@
+## 4. Historical G47 Boundaries
+
+docs/phase-b/architecture/LYRION_TRUE_AGENTIC_OS_PHASE_B_ARCHITECTURE_BASELINE_v1.md:482:G47 remains NOT CLOSED until authoritative evidence requirements are satisfied.
+docs/phase-b/baseline/LYRION_EXISTING_ARCHITECTURE_CAPABILITY_BASELINE_AND_TAOS_PHASE_B_RECONCILIATION_v1.md:1125:| Production Certification | G47 blocked | Continue independently | BLOCKED |
+docs/phase-b/baseline/LYRION_EXISTING_ARCHITECTURE_CAPABILITY_BASELINE_AND_TAOS_PHASE_B_RECONCILIATION_v1.md:1308:**G47 Certification:** BLOCKED
+docs/phase-b/governance/LYRION_TRUE_AGENTIC_OS_PHASE_B_MASTER_MANIFEST_v1.md:568:Historical G47 evidence and current Phase-B documentation SHALL remain
+docs/phase-b/operations/LYRION_UNIFIED_CORE_OPERATIONS_SPECIFICATION_v1.md:760:Historical G47 evidence SHALL remain clearly separated from current Phase-B operational evidence.
+docs/phase-b/recovery/LYRION_UNIFIED_CORE_RECOVERY_RESILIENCE_SPECIFICATION_v1.md:826:Historical G47 evidence SHALL remain distinct from current Phase-B recovery and resilience evidence.
+docs/phase-b/requirements/LYRION_CORE_PRD_TRACEABILITY_ACCEPTANCE_MATRIX_v1.md:432:A–H, G47 historical-evidence boundaries, and separation of validation
+docs/phase-b/requirements/LYRION_CORE_PRD_TRACEABILITY_ACCEPTANCE_MATRIX_v1.md:473:**Resolution:** Security Testing Specification `TAOS-CORE-SEC-TEST-001` defines the security validation baseline, evidence requirements, security-test traceability, Security Gates S1–S10, security finding classification, regression/retesting, production-security boundary, and G47 historical-evidence boundary.
+docs/phase-b/security-testing/LYRION_UNIFIED_CORE_SECURITY_TESTING_SPECIFICATION_v1.md:1061:Existing G47 evidence SHALL remain explicitly classified as historical evidence unless independently revalidated for the current architecture and environment.
+docs/phase-b/security-testing/LYRION_UNIFIED_CORE_SECURITY_TESTING_SPECIFICATION_v1.md:1065:The current G47 certification boundary remains unchanged.
+docs/phase-b/security-testing/LYRION_UNIFIED_CORE_SECURITY_TESTING_SPECIFICATION_v1.md:1103:11. G47 historical evidence remains separated from current evidence.
+docs/phase-b/validation/LYRION_UNIFIED_CORE_VALIDATION_SPECIFICATION_v1.md:729:Historical G47 evidence SHALL remain classified according to its established provenance.
+docs/phase-b/validation/LYRION_UNIFIED_CORE_VALIDATION_SPECIFICATION_v1.md:740:The existing G47 record establishes that unavailable historical physical artifacts SHALL NOT be represented as recovered evidence.
+docs/phase-b/validation/LYRION_UNIFIED_CORE_VALIDATION_SPECIFICATION_v1.md:853:15. G47 historical evidence boundaries remain preserved.
+

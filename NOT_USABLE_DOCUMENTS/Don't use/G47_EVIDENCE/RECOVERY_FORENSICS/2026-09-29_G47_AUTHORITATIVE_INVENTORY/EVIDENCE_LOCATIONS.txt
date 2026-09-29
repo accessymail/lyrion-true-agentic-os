@@ -1,0 +1,30 @@
+## 6. Possible Evidence Directories
+
+ABSENT:  .lyrion-g47-environment-baseline
+ABSENT:  .lyrion-g47-evidence
+ABSENT:  .lyrion-g47-evidence-r2
+ABSENT:  .lyrion-g47-evidence-r3
+PRESENT: artifacts
+artifacts/g47-authoritative-inventory/CERTIFICATION_REFERENCES.txt
+artifacts/g47-authoritative-inventory/EVIDENCE_LOCATIONS.txt
+artifacts/g47-authoritative-inventory/G47_FILES.txt
+artifacts/g47-authoritative-inventory/G47_HISTORICAL_BOUNDARY.txt
+artifacts/g47-authoritative-inventory/G47_REFERENCES.txt
+artifacts/g47-authoritative-inventory/REPORT.md
+ABSENT:  docs/g47
+PRESENT: tools/g47
+tools/g47/__pycache__/check_gate_status.cpython-314.pyc
+tools/g47/__pycache__/create_source_manifest.cpython-314.pyc
+tools/g47/__pycache__/discover_authoritative_sources.cpython-314.pyc
+tools/g47/__pycache__/environment_preflight.cpython-314.pyc
+tools/g47/__pycache__/ingest_authoritative_sources.cpython-314.pyc
+tools/g47/__pycache__/validate_source_directory.cpython-314.pyc
+tools/g47/__pycache__/verify_authoritative_sources.cpython-314.pyc
+tools/g47/check_gate_status.py
+tools/g47/create_source_manifest.py
+tools/g47/discover_authoritative_sources.py
+tools/g47/environment_preflight.py
+tools/g47/ingest_authoritative_sources.py
+tools/g47/validate_source_directory.py
+tools/g47/verify_authoritative_sources.py
+
