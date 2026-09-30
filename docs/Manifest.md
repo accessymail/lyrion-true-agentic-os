@@ -1500,3 +1500,20 @@ implementation, production deployment, or production certification.
 - Production certification: `NOT CLAIMED`
 - G46.5/G47 reconstruction: `NOT PERFORMED`
 - R097 modification: `NOT PERFORMED`
+
+### Aegis Policy Decision Boundary — Bounded Slice Status
+
+- **Bounded Aegis implementation:** PRESENT
+- **Controlled validation:** 152/152 PASS
+- **Controlled evidence review:** VERIFIED
+- **Bounded Aegis slice acceptance:** ACCEPTED
+- **Scope:** bounded policy-decision validation slice only
+- **Full PB-DOC-010 validation:** NOT VALIDATED
+- **Phase-B production implementation:** BLOCKED
+- **Production certification:** NOT CLAIMED
+- **G46.5/G47:** NOT RECONSTRUCTED / BLOCKED
+- **R097:** UNCHANGED
+
+This status records acceptance of the bounded Aegis validation slice only.
+It does not constitute full PB-DOC-010 validation, production operation,
+or production certification.

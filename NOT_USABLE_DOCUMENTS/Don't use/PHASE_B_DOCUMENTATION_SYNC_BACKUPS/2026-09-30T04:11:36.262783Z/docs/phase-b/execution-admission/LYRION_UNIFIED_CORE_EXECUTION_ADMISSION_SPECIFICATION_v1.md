@@ -915,18 +915,3 @@ evidence-backed acceptance.
 Acceptance record:
 
 `docs/phase-b/validation/EXECUTION_ADMISSION_SLICE_ACCEPTANCE_RECORD_v1.md`
-
-### Bounded Aegis Slice Acceptance Status
-
-The Aegis policy-decision boundary has completed a controlled bounded
-validation and acceptance cycle.
-
-- Controlled validation: **152/152 PASS**
-- Controlled evidence review: **VERIFIED**
-- Bounded slice acceptance: **ACCEPTED**
-- Full PB-DOC-010 validation: **NOT VALIDATED**
-- Production implementation: **BLOCKED**
-- Production certification: **NOT CLAIMED**
-
-This entry does not change the validation requirements or production
-acceptance requirements of the full Execution Admission specification.
