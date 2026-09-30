@@ -1032,3 +1032,17 @@ The canonical execution boundary remains:
 ---
 
 **End of PB-DOC-005 — Agent Harness Specification v1.0.0**
+
+## Acceptance Evidence
+
+- Controlled validation: **PASS**
+- Agent Harness tests: **26 passed / 0 failed**
+- Ruff: **PASS**
+- mypy: **PASS**
+- Formal acceptance review: **36 PASS / 0 FAIL**
+- Production certification: **NOT CLAIMED**
+- Evidence: `docs/phase-b/agent-harness/validation/PB-DOC-005_ACCEPTANCE_EVIDENCE_v1.md`
+
+The Agent Harness consumes existing governed security and execution
+controls and does not create a parallel authorization, capability,
+execution-admission, privileged-execution, or security-bypass path.

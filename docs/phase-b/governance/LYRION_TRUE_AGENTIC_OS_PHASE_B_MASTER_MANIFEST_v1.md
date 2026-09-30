@@ -771,3 +771,13 @@ implementation, production deployment, or production certification.
 This status records acceptance of the bounded Aegis validation slice only.
 It does not constitute full PB-DOC-010 validation, production operation,
 or production certification.
+
+## PB-DOC-005 Agent Harness — Acceptance Synchronization
+
+- Status: **IMPLEMENTED / VALIDATED / ACCEPTED**
+- Acceptance Evidence: `docs/phase-b/agent-harness/validation/PB-DOC-005_ACCEPTANCE_EVIDENCE_v1.md`
+- Agent Harness Tests: **26 passed / 0 failed**
+- Formal Acceptance Review: **36 PASS / 0 FAIL**
+- Production Certification: **NOT CLAIMED**
+- Security Boundary: Existing governed authorization, capability, admission, Secure Executor, Sandbox, and provenance architecture remains authoritative.
+- Scope Boundary: Self-learning, self-evolution, self-awareness, self-recognition, self-understanding, self-wakeup, and self-response are outside this bounded implementation.
