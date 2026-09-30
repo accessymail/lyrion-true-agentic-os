@@ -1,0 +1,32 @@
+LYRION TRUE AGENTIC OS
+Core Governance/Evidence Tool Validation Provenance
+
+Validation decision: PASS
+Validation date: 2026-09-30
+Repository: /home/aniket/lyrion-migration-verified
+HEAD: e1fe75f0ef5669cd041ff5f16bddd6fca08e1a7e
+origin/main: e1fe75f0ef5669cd041ff5f16bddd6fca08e1a7e
+
+Validation gates:
+  Python compile: PASS
+  Ruff: PASS
+  Mypy: PASS
+  Runtime R2 review: PASS
+  Runtime requirement mapping: PASS
+  Runtime evidence reconciliation: PASS
+  Governance assertions: PASS
+  Source SHA-256 integrity: PASS
+
+Source and validation-artifact hashes:
+f4f6b688abb97299be58df22fdf10433bf6febf3c646f7806aa7aa66f8065b2e  map_lyrion_core_requirements.py
+f7b301917629557f5b2f0fef02383dd1f36c40c345315900668f756e9bba6ff2  reconcile_lyrion_core_evidence.py
+1bc18a4ab2f19966c0e243634bd71a28336125261a43c66c5731609ae7099dd8  review_lyrion_core_gap_sync.py
+
+Governance boundaries:
+  Production certification: NOT CLAIMED
+  G47 closure: NOT CLAIMED
+  Documentation baseline freeze: NOT CLAIMED
+  Implementation authorization: not altered by this operation
+
+Provenance rule:
+Validation artifacts are exact byte-preserving copies of the validated source files.
