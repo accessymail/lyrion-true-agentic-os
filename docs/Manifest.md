@@ -1570,3 +1570,72 @@ Current governance boundaries remain unchanged:
 - Production Certification: **NOT CLAIMED**
 
 No dedicated VS Code Manifest is created by this synchronization.
+
+---
+
+## R2.21.1 Human Adjudication Controlled Validation Synchronization — 2026-10-01
+
+**Synchronization Date:** 2026-10-01
+**Repository:** `/home/aniket/lyrion-migration-verified`
+**Validation Scope:** R2.21.1 immutable human-adjudication controlled verification
+
+### R2.21.1 Controlled Validation Components
+
+The following R2.21.1 controlled-validation components and validation record were successfully verified:
+
+- `tools/phase_b/core/verify_lyrion_core_human_adjudication_r2_21_1_controlled.py`
+- `tools/phase_b/core/record_lyrion_core_human_adjudication_r2_21_1_validation.py`
+- `artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_R2_21_1_CONTROLLED_VALIDATION_20261001T110547418150+0000.json`
+
+### Controlled Validation Result
+
+- Controlled verification: **PASS**
+- Physical source artifact SHA-256 integrity: **PASS**
+- Canonical payload SHA-256 integrity: **PASS**
+- Validation-record SHA-256 integrity: **PASS**
+- Source-to-Library byte identity: **PASS**
+- Source-to-Library SHA-256 identity: **PASS**
+- Duplicate protection: **VERIFIED**
+- Historical R2.21 integrity: **VERIFIED**
+- R2.20 integrity/linkage: **VERIFIED**
+- Evidence accepted: **NO**
+- Evidence validated for production readiness: **NO**
+- Production certified: **NO**
+- Promotion: **NO**
+- Governance changed: **NO**
+
+### Library Validation File Preservation
+
+Validated files are preserved under:
+
+`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
+
+The Library copies were independently verified against their repository sources by byte comparison and SHA-256 comparison.
+
+### Governance Boundary
+
+This synchronization records a successful controlled validation and provenance checkpoint only.
+
+It does **not**:
+
+- accept the underlying evidence,
+- change the human adjudication decision,
+- authorize production certification,
+- close G46.5/G47,
+- promote evidence,
+- authorize a production milestone,
+- modify the self-learning or self-evolution state,
+- modify the future-reserved self-awareness family.
+
+Current governance boundaries remain unchanged:
+
+- Architecture Approval: **APPROVED**
+- Implementation Authorization: **AUTHORIZED**
+- Production Implementation: **BLOCKED**
+- Production Certification: **NOT CLAIMED**
+- Self-Learning: **HELD**
+- Self-Evolution: **HELD**
+- Self-Awareness Family: **FUTURE-RESERVED**
+
+No dedicated VS Code Manifest is created by this synchronization.
+The Phase-B Master Manifest remains an independent governance artifact.

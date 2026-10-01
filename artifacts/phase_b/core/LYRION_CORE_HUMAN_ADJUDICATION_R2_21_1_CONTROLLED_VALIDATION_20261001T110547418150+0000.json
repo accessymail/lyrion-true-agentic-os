@@ -1,0 +1,63 @@
+{
+  "controlled_verification": {
+    "adjudicate": false,
+    "mode": "READ-ONLY",
+    "promote": false,
+    "required_markers_verified": true,
+    "result": "PASS",
+    "tool": "tools/phase_b/core/verify_lyrion_core_human_adjudication_r2_21_1_controlled.py"
+  },
+  "document_id": "LYRION-R2.21.1-CONTROLLED-VALIDATION-001",
+  "git": {
+    "governed_r2_20_head": "96ef24c2ed16b9556ce5af0540d214aec7404896",
+    "head": "96ef24c2ed16b9556ce5af0540d214aec7404896",
+    "head_match": true,
+    "repository": "/home/aniket/lyrion-migration-verified"
+  },
+  "governance": {
+    "architecture_approval": "APPROVED",
+    "documentation_freeze": "NOT AUTHORIZED",
+    "implementation_authorization": "AUTHORIZED",
+    "production_certification": "NOT CLAIMED",
+    "production_implementation": "BLOCKED",
+    "self_awareness_family": "FUTURE-RESERVED",
+    "self_evolution": "HELD",
+    "self_learning": "HELD"
+  },
+  "non_claims": [
+    "Evidence acceptance is not claimed.",
+    "Production validation is not claimed.",
+    "Production certification is not claimed.",
+    "Evidence promotion is not claimed.",
+    "Implementation completion is not claimed.",
+    "No governance state was changed by this record."
+  ],
+  "promotion_boundary": {
+    "accepted": false,
+    "certified": false,
+    "promoted": false,
+    "validated": false
+  },
+  "purpose": "Record the successful controlled verification of the immutable R2.21.1 human-adjudication artifact.",
+  "record_sha256": "9067dd11fa54096e23802462bd8775d30b1d25b612fb0a08809a592b9f5fbe08",
+  "record_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "source": {
+    "artifact_path": "artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21_1_R2-20-002_20261001T104339_623159_plus_0000.json",
+    "canonical_payload_sha256": "145caf565b08a9e7d8422f7219c7f62cf3ceec621e827ea818d0ea74c80b3077",
+    "decision": "DEFER",
+    "evidence_type": "IMPLEMENTATION",
+    "physical_artifact_sha256": "8f8db4715d67cde33ded58deabe2da7dfa588c5cab87cdbffaa8d38ea545b9b2",
+    "provenance": [
+      "R2.13"
+    ],
+    "requirement_id": "CORE-003",
+    "review_reference": "LYRION-R2-HUMAN-ADJ-002",
+    "reviewer": "Aniket Pawar",
+    "workflow_record_id": "R2-20-002"
+  },
+  "tool_id": "LYRION-R2.21.1-VALIDATION-RECORDER",
+  "validation_scope": "CONTROLLED-READ-ONLY-VERIFICATION",
+  "validation_status": "PASS",
+  "validation_timestamp": "2026-10-01T11:05:47.418181+00:00"
+}
