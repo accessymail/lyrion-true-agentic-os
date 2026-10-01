@@ -1,0 +1,759 @@
+{
+  "artifact_sha256": "d4ca99224a46bd9ae66bc6b179c12cade4cb6622c21289ef0eb755a4730a3816",
+  "decision_boundary": {
+    "automatic_acceptance": false,
+    "automatic_defer": false,
+    "automatic_rejection": false,
+    "human_decision_required": true
+  },
+  "document_id": "LYRION-CORE-HUMAN-ADJUDICATION-RECONCILIATION-R2-21-V2",
+  "future_reserved": [
+    "self-awareness-family"
+  ],
+  "git": {
+    "current_repository_head": "281bcaf0e2077badb561fcbb1ab21e743f196654",
+    "historical_provenance_preserved": true,
+    "r2_20_expected_head": "96ef24c2ed16b9556ce5af0540d214aec7404896",
+    "r2_20_internal_provenance_match": true,
+    "r2_20_recorded_head": "96ef24c2ed16b9556ce5af0540d214aec7404896",
+    "repository_advanced_since_r2_20": true
+  },
+  "governance": {
+    "architecture_approval": "APPROVED",
+    "documentation_freeze": "NOT AUTHORIZED",
+    "implementation_authorization": "AUTHORIZED",
+    "production_certification": "NOT CLAIMED",
+    "production_implementation": "BLOCKED",
+    "self_awareness_family": "FUTURE-RESERVED",
+    "self_evolution": "HELD",
+    "self_learning": "HELD"
+  },
+  "inputs": {
+    "historical_r2_21_artifact": "artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+    "historical_r2_21_sha256": "88d9d336c6bf1818e6f1116e41c37a6bc345fbc3c546a8caa1574880e73ee927",
+    "workflow_artifact": "artifacts/phase_b/core/LYRION_CORE_HUMAN_DECISION_WORKFLOW_R2_20.json",
+    "workflow_sha256": "35cb056b11f462f28606255794050149fb3719401321f146160a4f90ae2f1394"
+  },
+  "observation_summary": {
+    "current_conflict_count": 0,
+    "current_decision_coverage_count": 1,
+    "current_duplicate_count": 0,
+    "current_immutable_decision_count": 1,
+    "current_pending_count": 26,
+    "historical_decision_count": 27,
+    "historical_duplicate_count": 0,
+    "historical_missing_count": 0,
+    "unknown_workflow_id_count": 0,
+    "unknown_workflow_record_ids": [],
+    "workflow_record_count": 27
+  },
+  "purpose": "Read-only lineage-aware reconciliation of R2.20 workflow coverage against historical R2.21 and current immutable R2.21.1 human-adjudication artifacts.",
+  "record_count": 27,
+  "records": [
+    {
+      "adjudication_id": "R2.17-0001",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "LYRION-R2-HUMAN-ADJ-001",
+          "reviewer": "Aniket Pawar",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "9d77e475a455afd194d0999acaaefae4284453d9bba561f39a80ab8097002c3f",
+          "workflow_record_id": "R2-20-001"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/core/__init__.py",
+      "requirement_id": "CORE-001",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-001"
+    },
+    {
+      "adjudication_id": "R2.17-0002",
+      "current_adjudication_status": "CURRENT-DECISION-OBSERVED",
+      "current_decision": "DEFER",
+      "current_immutable_decision_observations": [
+        {
+          "artifact_sha256": "145caf565b08a9e7d8422f7219c7f62cf3ceec621e827ea818d0ea74c80b3077",
+          "decision": "DEFER",
+          "review_reference": "LYRION-R2-HUMAN-ADJ-002",
+          "reviewer": "Aniket Pawar",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21_1_R2-20-002_20261001T104339_623159_plus_0000.json",
+          "source_kind": "R2.21.1-IMMUTABLE",
+          "source_sha256": "698e464c9098bd4c82c3ed6587a8a5ffa3cd11822724fa3ecfce5c14f0f6ebb6",
+          "workflow_record_id": "R2-20-002"
+        }
+      ],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "698e464c9098bd4c82c3ed6587a8a5ffa3cd11822724fa3ecfce5c14f0f6ebb6",
+          "workflow_record_id": "R2-20-002"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/security/authorization.py",
+      "requirement_id": "CORE-003",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-002"
+    },
+    {
+      "adjudication_id": "R2.17-0003",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "029db720f226208205742e264d0efd773a466a61ff71d895d865fc7980ba4066",
+          "workflow_record_id": "R2-20-003"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/security/guards.py",
+      "requirement_id": "CORE-003",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-003"
+    },
+    {
+      "adjudication_id": "R2.17-0004",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "9612470329c1f3453a608b595b5c207f8bf0e28ccdf581a36815ef324abbc8e9",
+          "workflow_record_id": "R2-20-004"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/security/policy.py",
+      "requirement_id": "CORE-003",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-004"
+    },
+    {
+      "adjudication_id": "R2.17-0005",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "9455ff03cf622fbd04b8a7d81f64f91777b1e210b3c49e97d6fadbaabc8e0897",
+          "workflow_record_id": "R2-20-005"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/security/rules.py",
+      "requirement_id": "CORE-003",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-005"
+    },
+    {
+      "adjudication_id": "R2.17-0006",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "6a8168a6ec918483cc576c4fa578c5972e8f34321132ac3d000cc6b78659054b",
+          "workflow_record_id": "R2-20-006"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/agent_harness/contracts.py",
+      "requirement_id": "CORE-005",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-006"
+    },
+    {
+      "adjudication_id": "R2.17-0007",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "95ac278d273a945dc796a3768407965c54f53a34d03a7c634259120babbc578a",
+          "workflow_record_id": "R2-20-007"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/agent_harness/harness.py",
+      "requirement_id": "CORE-005",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-007"
+    },
+    {
+      "adjudication_id": "R2.17-0008",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "TEST",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "a90c95427fcbab78712a4a66d524fde7076d1088ec10cd0b0ba19be04a1b0e69",
+          "workflow_record_id": "R2-20-008"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "tests/unit/agent_harness/test_contracts.py",
+      "requirement_id": "CORE-005",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-008"
+    },
+    {
+      "adjudication_id": "R2.17-0009",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "TEST",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "60b16a3ed64919d3f6f3f177b07e1e0884beb55055f3e55f653099dff34c9fda",
+          "workflow_record_id": "R2-20-009"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "tests/unit/agent_harness/test_harness_validation.py",
+      "requirement_id": "CORE-005",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-009"
+    },
+    {
+      "adjudication_id": "R2.17-0010",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "97a1c0669b06892223139a1eabdae9245dce658a0fc02d21e86ca4e884d5d56d",
+          "workflow_record_id": "R2-20-010"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/backends/linux/host/qualification/snapshot_diff.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-010"
+    },
+    {
+      "adjudication_id": "R2.17-0011",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "ed263af282df6205b17e1be954e65f004299f37ffecf2c323245bc21834e3519",
+          "workflow_record_id": "R2-20-011"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/bootstrap.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-011"
+    },
+    {
+      "adjudication_id": "R2.17-0012",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "979599fecb1405dac596492b24dff3e4a0472dcc9f2b7460fa4930865c41166f",
+          "workflow_record_id": "R2-20-012"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/bootstrap_contracts.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-012"
+    },
+    {
+      "adjudication_id": "R2.17-0013",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "c01ab95d4a5a6b6ee2785000d95671299be1018376845501be571b6ebda94dde",
+          "workflow_record_id": "R2-20-013"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/child_context.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-013"
+    },
+    {
+      "adjudication_id": "R2.17-0014",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "d1571e1598e3548c2535550f02337595b3e0ef7af31c3b534f4f184ea0e20082",
+          "workflow_record_id": "R2-20-014"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/child_entry.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-014"
+    },
+    {
+      "adjudication_id": "R2.17-0015",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "a75e99501699a777b094e41cb56601894fa6cf634ffe4f6838703fbc02c8f40f",
+          "workflow_record_id": "R2-20-015"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/child_launcher.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-015"
+    },
+    {
+      "adjudication_id": "R2.17-0016",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "a6eb4a080c2d0b9fb4b9d0cd55b62fd57087de1d2dc13b5f05cde30226cf9915",
+          "workflow_record_id": "R2-20-016"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/identity.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-016"
+    },
+    {
+      "adjudication_id": "R2.17-0017",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "77425556745abe6cf041c69754355fdd75cfba796c4bc51b15c297631a8d0af2",
+          "workflow_record_id": "R2-20-017"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/supervisor.py",
+      "requirement_id": "CORE-007",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-017"
+    },
+    {
+      "adjudication_id": "R2.17-0018",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "f7a217c4d62b49645f0b6228e3e12fa7f220d79b1c75a982cf2be871953dd285",
+          "workflow_record_id": "R2-20-018"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/application/__init__.py",
+      "requirement_id": "CORE-008",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-018"
+    },
+    {
+      "adjudication_id": "R2.17-0019",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "ef7e1ae6d1d6d15a7c2b5787e6dc3785b83af2e060f505f423882fc9b0ce442b",
+          "workflow_record_id": "R2-20-019"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/integration/__init__.py",
+      "requirement_id": "CORE-008",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-019"
+    },
+    {
+      "adjudication_id": "R2.17-0020",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "8c1687dda5defc35d439264ad824de92a8aa20726e144f809b330b90c26efd05",
+          "workflow_record_id": "R2-20-020"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/executor.py",
+      "requirement_id": "CORE-009",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-020"
+    },
+    {
+      "adjudication_id": "R2.17-0021",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "a6eb4a080c2d0b9fb4b9d0cd55b62fd57087de1d2dc13b5f05cde30226cf9915",
+          "workflow_record_id": "R2-20-021"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/identity.py",
+      "requirement_id": "CORE-009",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-021"
+    },
+    {
+      "adjudication_id": "R2.17-0022",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "77425556745abe6cf041c69754355fdd75cfba796c4bc51b15c297631a8d0af2",
+          "workflow_record_id": "R2-20-022"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/process_boundary/supervisor.py",
+      "requirement_id": "CORE-009",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-022"
+    },
+    {
+      "adjudication_id": "R2.17-0023",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "33cd650ba464dbce16503e75fe2cba463e229211f31e7627eb74ef6cf1ff2fb3",
+          "workflow_record_id": "R2-20-023"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/events/models.py",
+      "requirement_id": "CORE-014",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-023"
+    },
+    {
+      "adjudication_id": "R2.17-0024",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "aaa7842835cd906b0e3bb0a618783a1d65fe864c9e25dee2cd549a11b7878c68",
+          "workflow_record_id": "R2-20-024"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/execution/backends/linux/host/qualification/evidence_provenance.py",
+      "requirement_id": "CORE-014",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-024"
+    },
+    {
+      "adjudication_id": "R2.17-0025",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "daefebd69e3af84c59f975fddac43fe81079ed3a46a5a30dfcee5e7e79bc4b91",
+          "workflow_record_id": "R2-20-025"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/observability/execution_audit.py",
+      "requirement_id": "CORE-014",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-025"
+    },
+    {
+      "adjudication_id": "R2.17-0026",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "workflow_record_id": "R2-20-026"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/persistence/__init__.py",
+      "requirement_id": "CORE-014",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-026"
+    },
+    {
+      "adjudication_id": "R2.17-0027",
+      "current_adjudication_status": "PENDING-CURRENT-ADJUDICATION",
+      "current_decision": null,
+      "current_immutable_decision_observations": [],
+      "evidence_type": "IMPLEMENTATION",
+      "historical_decision": "DEFER",
+      "historical_decision_observations": [
+        {
+          "artifact_sha256": null,
+          "decision": "DEFER",
+          "review_reference": "",
+          "reviewer": "",
+          "source_file": "LYRION_CORE_HUMAN_ADJUDICATION_DECISION_R2_21.json",
+          "source_kind": "R2.21-HISTORICAL",
+          "source_sha256": "daefebd69e3af84c59f975fddac43fe81079ed3a46a5a30dfcee5e7e79bc4b91",
+          "workflow_record_id": "R2-20-027"
+        }
+      ],
+      "historical_lineage_status": "HISTORICAL-LINEAGE-PRESENT",
+      "path": "src/lyrion/observability/execution_audit.py",
+      "requirement_id": "CORE-015",
+      "workflow_decision": "DEFER",
+      "workflow_record_id": "R2-20-027"
+    }
+  ],
+  "repository": "/home/aniket/lyrion-migration-verified",
+  "schema_version": "1.0.0",
+  "status": "RECONCILED-ADJUDICATION-INCOMPLETE",
+  "tool_id": "LYRION-CORE-HUMAN-ADJUDICATION-RECONCILIATION-R2-21-V2",
+  "verification": {
+    "current_decision_conflicts_checked": true,
+    "current_duplicate_decisions_checked": true,
+    "evidence_accepted": false,
+    "evidence_validated": false,
+    "historical_decisions_not_counted_as_current": true,
+    "lineage_aware": true,
+    "production_certified": false,
+    "promotion": false,
+    "r2_20_modified": false,
+    "r2_21_1_modified": false,
+    "r2_21_modified": false,
+    "source_files_read_only": true,
+    "unknown_workflow_ids_checked": true
+  }
+}

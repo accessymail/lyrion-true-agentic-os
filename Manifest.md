@@ -1639,3 +1639,46 @@ Current governance boundaries remain unchanged:
 
 No dedicated VS Code Manifest is created by this synchronization.
 The Phase-B Master Manifest remains an independent governance artifact.
+
+
+### R2.21 V2 Controlled Validation Components
+
+The following R2.21 V2 human-adjudication reconciliation components were independently validated and synchronized into the canonical LYRION True Agentic OS Library Validation Files location:
+
+- `tools/phase_b/core/reconcile_lyrion_core_human_adjudication_r2_21_v2.py`
+- `tools/phase_b/core/verify_lyrion_core_human_adjudication_r2_21_v2.py`
+- `artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_RECONCILIATION_R2_21_V2_CORRECTED.json`
+- `artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_RECONCILIATION_R2_21_V2_CORRECTED_CONTROLLED_VALIDATION.json`
+
+Validation and synchronization status:
+
+- R2.21 V2 reconciliation integrity: PASS
+- Independent read-only verifier: PASS
+- Python compilation: PASS
+- Ruff validation: PASS
+- mypy validation: PASS
+- Repository-to-Library byte identity: PASS
+- Repository-to-Library SHA-256 identity: PASS
+- Failed SHA-integrity artifact excluded from Validation Files: PASS
+- Historical R2.20 provenance preserved: PASS
+- Current R2.21.1 coverage: `1/27`
+- Pending current human adjudications: `26`
+- Current conflicts: `0`
+- Current duplicates: `0`
+- Unknown workflow IDs: `0`
+
+Governance boundaries remain unchanged:
+
+- Evidence accepted: NO
+- Evidence validated for production: NO
+- Production certified: NO
+- Promotion: NO
+- Governance changed: NO
+
+The canonical Library destination remains:
+
+`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
+
+No dedicated VS Code Manifest was created. The existing `Manifest.md` and `docs/Manifest.md` remain the synchronized repository manifest copies.
+
+The preserved failed SHA-integrity artifact remains repository audit history and is intentionally excluded from the Validation Files population.

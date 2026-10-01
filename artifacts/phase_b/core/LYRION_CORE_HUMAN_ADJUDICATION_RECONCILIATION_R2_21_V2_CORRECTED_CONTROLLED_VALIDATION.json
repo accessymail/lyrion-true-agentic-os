@@ -1,0 +1,69 @@
+{
+  "decision_boundary": {
+    "automatic_acceptance": false,
+    "automatic_certification": false,
+    "automatic_promotion": false,
+    "automatic_rejection": false,
+    "automatic_validation": false,
+    "human_adjudication_only": true
+  },
+  "document_id": "LYRION-CORE-HUMAN-ADJUDICATION-RECONCILIATION-R2-21-V2-CONTROLLED-VALIDATION",
+  "future_reserved": [
+    "SELF-LEARNING",
+    "SELF-EVOLUTION",
+    "SELF-AWARENESS-FAMILY"
+  ],
+  "governance": {
+    "evidence_accepted": false,
+    "evidence_validated_for_production": false,
+    "governance_changed": false,
+    "production_certified": false,
+    "promotion": false
+  },
+  "integrity_checks": {
+    "canonical_artifact_sha256_verified": true,
+    "conflict_count_verified": true,
+    "current_coverage_verified": true,
+    "current_decision_count_verified": true,
+    "duplicate_count_verified": true,
+    "governance_verified": true,
+    "historical_decision_count_verified": true,
+    "pending_count_verified": true,
+    "physical_artifact_sha256_verified": true,
+    "r2_20_002_lineage_verified": true,
+    "record_count_verified": true,
+    "unknown_workflow_id_count_verified": true
+  },
+  "lineage": {
+    "current_repository_head": "281bcaf0e2077badb561fcbb1ab21e743f196654",
+    "historical_provenance_preserved": true,
+    "r2_20_002_current_decision": "DEFER",
+    "r2_20_002_historical_decision": "DEFER",
+    "r2_20_002_lineage_verified": true,
+    "r2_20_historical_head": "96ef24c2ed16b9556ce5af0540d214aec7404896",
+    "repository_advanced_since_r2_20": true
+  },
+  "reconciliation": {
+    "current_conflicts": 0,
+    "current_decision_coverage": "1/27",
+    "current_duplicates": 0,
+    "current_r2_21_1_decisions": 1,
+    "historical_r2_21_decisions": 27,
+    "pending_current_adjudications": 26,
+    "status": "RECONCILED-ADJUDICATION-INCOMPLETE",
+    "unknown_workflow_ids": 0,
+    "workflow_record_count": 27
+  },
+  "record_version": "1.0.0",
+  "source": {
+    "artifact": "artifacts/phase_b/core/LYRION_CORE_HUMAN_ADJUDICATION_RECONCILIATION_R2_21_V2_CORRECTED.json",
+    "canonical_artifact_sha256": "d4ca99224a46bd9ae66bc6b179c12cade4cb6622c21289ef0eb755a4730a3816",
+    "physical_artifact_sha256": "dd7eb17c876b93e235192c82802532f25440311a72f73f775d1062b41f2a1971",
+    "recorded_artifact_sha256": "d4ca99224a46bd9ae66bc6b179c12cade4cb6622c21289ef0eb755a4730a3816"
+  },
+  "tool_id": "LYRION-CORE-HUMAN-ADJUDICATION-RECONCILIATION-R2-21-V2-CONTROLLED-VALIDATION",
+  "validation_mode": "READ-ONLY-SOURCE-VALIDATION",
+  "validation_record_sha256": "42be6e5bbcff1762b717593db4e65a7f3ccaee9a38c315b200b695f5b6cbd7f3",
+  "validation_status": "PASS",
+  "validation_timestamp": "2026-10-01T11:50:04.545694Z"
+}
