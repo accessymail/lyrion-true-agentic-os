@@ -336,6 +336,50 @@ Model access never grants authorization or execution authority. Security-critica
 
 ---
 
+## LHICF — LYRION Host Integration & Control Fabric — Controlled Qualification Synchronization
+
+LHICF (LYRION Host Integration & Control Fabric) is the controlled host-integration boundary between the LYRION execution security chain and the host operating environment.
+
+The canonical security/execution relationship is:
+
+**Aegis → Capability Gateway → Secure Executor → Agent Sandbox → LHICF → Host / OS / Application / Device**
+
+LHICF is a boundary and integration fabric. It does **not**:
+
+- grant capabilities;
+- authorize execution;
+- replace Aegis;
+- replace Capability Gateway;
+- replace Secure Executor;
+- replace Agent Sandbox;
+- bypass execution admission;
+- provide unrestricted host execution;
+- provide arbitrary shell/process execution;
+- weaken Linux security enforcement.
+
+Host interaction SHALL remain subordinate to authorization, execution admission, secure execution, sandboxing, verification, provenance, and applicable HITL controls.
+
+### Controlled LHICF Qualification Status
+
+The controlled LHICF qualification evidence currently records:
+
+- LHICF targeted qualification: **66/66 PASS**
+- Downstream security/execution regression: **852 PASS / 4 environment-dependent SKIPPED**
+- Ruff: **PASS**
+- Python compilation: **PASS**
+- Production Implementation: **NOT CLAIMED**
+- Production Certification: **NOT CLAIMED**
+- Security Certification: **NOT CLAIMED**
+- Deployment Authorization: **NOT CLAIMED**
+
+The authoritative detailed LHICF architecture, contracts, authorization boundary, threat model, review records, gates, and qualification evidence remain under:
+
+`docs/phase_b/security/lhicf/`
+
+The historical LHICF qualification provenance record is preserved and the reconciliation record documents subsequent controlled qualification reconciliation. These records SHALL NOT be interpreted as production certification.
+
+---
+
 # 10. CURRENT LIMITATIONS
 
 Not yet implemented as production infrastructure:
