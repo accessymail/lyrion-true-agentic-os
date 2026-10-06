@@ -1763,6 +1763,79 @@ No dedicated VS Code Manifest was created. The existing `Manifest.md` and `docs/
 The preserved failed SHA-integrity artifact remains repository audit history and is intentionally excluded from the Validation Files population.
 ---
 
+## Module 1.6-B — Agent Registry → Agent Harness Identity Resolution Boundary
+
+**Validation Record:** `TAOS-M1.6-B-VALIDATION-RECORD-001`
+
+**Status:** VALIDATED / PASS — CONTROLLED IMPLEMENTATION EVIDENCE
+
+Module 1.6-B establishes the controlled identity-resolution boundary between the Agent Runtime coordination plane and the existing Agent Harness execution and integration boundary.
+
+### Governance
+
+- Architecture Approval: APPROVED
+- Phase-B Implementation Authorization: AUTHORIZED
+- Module 1.6-B Validation: PASS
+- Production Implementation: BLOCKED
+- Production Certification: NOT CLAIMED
+- Security Certification: NOT CLAIMED
+- Deployment Authorization: NOT CLAIMED
+
+### Controlled Implementation Scope
+
+- `src/lyrion/agent_runtime/registry/identity_resolver.py`
+- `src/lyrion/agent_runtime/registry/__init__.py`
+- `tests/unit/agent_runtime/registry/test_identity_resolver.py`
+
+The resolver requires a registered Runtime identity and explicit identity provenance, then performs deterministic translation into the existing Agent Harness identity representation.
+
+### Ownership Boundary
+
+Agent Runtime owns coordination-plane identity resolution.
+
+Agent Harness remains authoritative for execution attribution and integration with already-authorized execution context.
+
+Identity resolution does not replace or redefine Agent Harness authorization, capability, execution-admission, sandbox, Secure Executor, or host-integration responsibilities.
+
+### Security Invariants
+
+Registry membership does not constitute authorization.
+
+Agent identity does not constitute authority.
+
+Runtime registration metadata does not constitute granted capability.
+
+Identity resolution does not create delegated authority or Execution Admission.
+
+The resolver does not authorize, grant capabilities, create delegated authority, create ExecutionAdmission, invoke SecureExecutor, provide direct host access, or bypass the established security chain.
+
+The established security chain remains authoritative:
+
+Governance → Aegis → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host.
+
+### Validation Evidence
+
+- Ruff: PASS
+- Python compilation: PASS
+- Mypy: PASS
+- Agent Runtime tests: 52 passed, 0 warnings
+- AST security gate: PASS
+- Exact scope gate: PASS
+
+Formal validation record:
+
+`LYRION / LYRION TRUE AGENTIC OS / DOCUMENTATION / Validation Files / TAOS-M1.6-B-VALIDATION-RECORD-001.md`
+
+### Historical Preservation
+
+PB-DOC-002 remains preserved as the historical Unified Agentic Runtime baseline and is not replaced, deleted, or rewritten by Module 1.6-B.
+
+Historical governance records, including historical `NOT AUTHORIZED` statements, remain preserved.
+
+Module 1.6-B validation does not authorize production operation, production deployment, production certification, security certification, unrestricted host control, or security-chain bypass.
+
+---
+
 ## Module 1.5 — Agent Identity & Binding Ownership Reconciliation
 
 **Synchronization Record:** `TAOS-M1.5-OWNERSHIP-RECONCILIATION-001`
