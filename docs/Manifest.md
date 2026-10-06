@@ -1761,3 +1761,39 @@ The canonical Library destination remains:
 No dedicated VS Code Manifest was created. The existing `Manifest.md` and `docs/Manifest.md` remain the synchronized repository manifest copies.
 
 The preserved failed SHA-integrity artifact remains repository audit history and is intentionally excluded from the Validation Files population.
+---
+
+## Module 1.5 — Agent Identity & Binding Ownership Reconciliation
+
+**Synchronization Record:** `TAOS-M1.5-OWNERSHIP-RECONCILIATION-001`
+
+**Validation Record:** `TAOS-M1.5-VALIDATION-RECORD-001`
+
+Module 1.5 establishes the controlled ownership boundary between the new
+Agent Runtime coordination plane and the existing Agent Harness execution
+boundary.
+
+**Status:** VALIDATED / ACCEPTED FOR CONTROLLED IMPLEMENTATION
+
+**Governance:**
+
+- Architecture Approval: APPROVED
+- Phase-B Implementation Authorization: AUTHORIZED
+- Module 1.5 Validation: PASS
+- Production Implementation: BLOCKED
+- Production Certification: NOT CLAIMED
+
+The Agent Runtime owns coordination-plane identity, registration, lifecycle,
+and task binding. The existing Agent Harness retains execution attribution and
+already-authorized execution-context integration.
+
+Agent Runtime identity, registration, trust metadata, lifecycle state, and
+task binding do not grant authorization, capabilities, delegated authority,
+execution admission, or host access.
+
+The compatibility adapter performs deterministic identity translation only and
+does not create authorization or execution authority.
+
+PB-DOC-002 and PB-DOC-003 remain preserved as separately governed documents.
+
+---

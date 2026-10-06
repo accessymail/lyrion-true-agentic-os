@@ -911,3 +911,107 @@ constitute implementation acceptance or production certification by themselves.
 This record updates the Phase-B Master Manifest's representation of validated
 Phase-B Core governance/evidence tooling. It does not convert documentation
 validation into implementation or production authority.
+---
+
+## Module 1.5 — Agent Identity & Binding Ownership Reconciliation
+
+**Synchronization Record:** `TAOS-M1.5-OWNERSHIP-RECONCILIATION-001`
+
+**Validation Record:** `TAOS-M1.5-VALIDATION-RECORD-001`
+
+**Scope:** Agent Runtime identity, registration, lifecycle, task binding, and
+compatibility translation into the existing Agent Harness boundary.
+
+### Governance State
+
+| Control | State |
+|---|---|
+| Architecture Approval | APPROVED |
+| Phase-B Implementation Authorization | AUTHORIZED |
+| Module 1.5 Validation | PASS |
+| Production Implementation | BLOCKED |
+| Production Certification | NOT CLAIMED |
+| Security Certification | NOT CLAIMED |
+| Deployment Authorization | NOT CLAIMED |
+
+### Ownership Decision
+
+Module 1.5 establishes the following separation of responsibilities:
+
+- **Agent Runtime** owns coordination-plane agent identity, registration,
+  lifecycle coordination, and task-to-agent coordination binding.
+- **Agent Harness** remains authoritative for execution attribution and
+  integration with already-authorized execution context.
+- **Task Model** remains authoritative for task lifecycle.
+- **Aegis / Capability Gateway / Execution Admission** remain authoritative
+  for authorization and execution admission.
+- **Secure Executor / Agent Sandbox / LHICF** remain authoritative for the
+  controlled execution boundary.
+
+The Module 1.5 `AgentIdentity` and `AgentTaskBinding` contracts therefore do
+not replace or redefine the existing Agent Harness `AgentIdentity` and
+`AgentBinding` contracts.
+
+### Compatibility Boundary
+
+The Agent Runtime → Agent Harness compatibility adapter performs deterministic
+identity translation only.
+
+It SHALL NOT:
+
+- authorize an agent;
+- grant capabilities;
+- create delegated authority;
+- create `ExecutionAdmission`;
+- invoke `SecureExecutor` as an authorization mechanism;
+- bypass the Agent Harness;
+- provide direct host access;
+- manufacture provenance;
+- restore revoked authority.
+
+An explicit non-blank `identity_provenance_ref` is required for translation.
+
+### Security Invariants
+
+Agent Runtime registration, trust metadata, lifecycle state, and task binding
+are coordination-plane state only.
+
+They do not constitute:
+
+- authorization;
+- capability grants;
+- delegated authority;
+- execution admission;
+- host authority.
+
+Recovery of Agent Runtime coordination state SHALL NOT restore revoked
+authorization or execution authority. A fresh security evaluation and valid
+execution admission remain required.
+
+### Implementation Boundary
+
+The accepted Module 1.5 implementation foundation consists of:
+
+- Agent Runtime contracts;
+- bounded agent lifecycle state;
+- immutable task-to-agent binding;
+- runtime registration registry;
+- Agent Runtime → Agent Harness identity compatibility adapter;
+- associated unit/security-scope tests.
+
+The implementation is accepted for controlled Phase-B implementation work
+within the existing authorization boundary.
+
+This synchronization does **not** authorize production operation,
+production deployment, production certification, unrestricted host control,
+security-chain bypass, autonomous self-learning, or autonomous self-evolution.
+
+### Historical Preservation
+
+PB-DOC-002 remains the historical Unified Agentic Runtime baseline and is not
+replaced, deleted, or rewritten by Module 1.5.
+
+PB-DOC-003 remains separately governed as the Agent Identity & Authority Model
+and is not marked complete by this reconciliation.
+
+---
