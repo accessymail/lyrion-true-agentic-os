@@ -1836,6 +1836,59 @@ Module 1.6-B validation does not authorize production operation, production depl
 
 ---
 
+## Module 1.6-C — Agent Registry → Agent Harness Negative / Security Boundary Validation
+
+**Validation Record:** `TAOS-M1.6-C-VALIDATION-RECORD-001`
+
+**Status:** VALIDATED / PASS — CONTROLLED IMPLEMENTATION EVIDENCE
+
+### Governance
+
+- Architecture Approval: APPROVED
+- Phase-B Implementation Authorization: AUTHORIZED
+- Module 1.6-C Validation: PASS
+- Production Implementation: BLOCKED
+- Production Certification: NOT CLAIMED
+- Security Certification: NOT CLAIMED
+- Deployment Authorization: NOT CLAIMED
+
+### Validation
+
+- Dedicated security tests: **15 passed**
+- Full Agent Runtime regression suite: **67 passed**
+- Ruff: **PASS**
+- Mypy: **PASS**
+- Python compilation: **PASS**
+- AST security gate: **PASS**
+
+### Security Boundary
+
+`Agent Runtime → Identity Resolution → Agent Harness → Existing Authorized Execution Context → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+Module 1.6-C validates that registry membership, identity, registration, trust state, lifecycle state, and task binding do **not** grant authorization, delegated authority, capabilities, Execution Admission, Secure Executor access, or direct host access.
+
+Invalid identity resolution fails closed, and runtime-declared capabilities are never promoted into Harness authority.
+
+### Historical Preservation
+
+PB-DOC-002 remains preserved as the historical Unified Agentic Runtime baseline and is not replaced, deleted, or rewritten.
+
+Historical governance records remain preserved.
+
+### Production Boundary
+
+Module 1.6-C does not authorize production operation, production deployment, privileged execution, unrestricted host access, security-chain bypass, security certification, or production certification.
+
+### Validation Decision
+
+**PASS — VALIDATED FOR CONTROLLED MODULE 1.6-C PROGRESSION**
+
+### Next Gate
+
+**Module 1.6-D — Existing-System Integration Tests**
+
+---
+
 ## Module 1.5 — Agent Identity & Binding Ownership Reconciliation
 
 **Synchronization Record:** `TAOS-M1.5-OWNERSHIP-RECONCILIATION-001`
