@@ -3,7 +3,14 @@
 from .registry import AgentRegistrationRecord, AgentRegistry, AgentRegistryError
 
 __all__ = [
+    "AgentHarnessIdentityResolver",
+    "AgentIdentityResolutionError",
+    "AgentRegistrationRecord",
     "AgentRegistry",
     "AgentRegistryError",
-    "AgentRegistrationRecord",
 ]
+
+from .identity_resolver import (
+    AgentHarnessIdentityResolver,
+    AgentIdentityResolutionError,
+)
