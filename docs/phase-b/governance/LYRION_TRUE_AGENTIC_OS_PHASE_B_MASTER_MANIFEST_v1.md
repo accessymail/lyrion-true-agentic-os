@@ -100,7 +100,7 @@ This record validates the R097 recovery-context, recovery-reentry, and fresh-adm
 | ID | Document | Path | Current State |
 |---|---|---|---|
 | PB-DOC-001 | Phase-B Requirements / PRD | `docs/phase-b/requirements/LYRION_UNIFIED_CORE_REQUIREMENTS_PRD_v1.md` | OPEN |
-| PB-DOC-002 | Agentic Runtime Specification | Planned | OPEN |
+| PB-DOC-002 | Agentic Runtime Specification `TAOS-CORE-AGENT-RUNTIME-001` | `docs/phase-b/agentic-runtime/LYRION_UNIFIED_CORE_AGENTIC_RUNTIME_SPECIFICATION_v1.md` | BASELINE PRESERVED; MODULE 1 ADDENDUM ACCEPTED |
 | PB-DOC-003 | Agent Identity & Authority Model | Planned | OPEN |
 | PB-DOC-004 | Capability Model Specification | Planned | OPEN |
 | PB-DOC-005 | Agent Harness Specification | Planned | OPEN |
@@ -495,6 +495,60 @@ It does not represent:
 - production operation
 - certification
 - implementation authorization
+
+---
+
+## Module 1 — Unified Agentic Runtime Synchronization
+
+**Module 1 Addendum:** ACCEPTED
+
+**Acceptance Record:**
+`docs/phase-b/agentic-runtime/module-1/TAOS-M1-ADDENDUM-ACCEPTANCE-RECORD_v2.md`
+
+**Baseline:**
+`PB-DOC-002 / TAOS-CORE-AGENT-RUNTIME-001`
+
+**Accepted Module 1 Documentation:**
+
+- `docs/phase-b/agentic-runtime/module-1/M1-01_Unified_Agentic_Runtime_Architecture_and_Implementation_Boundary_Addendum_v2.md`
+- `docs/phase-b/agentic-runtime/module-1/M1-02_Unified_Agentic_Runtime_Contract_Specification_v2.md`
+- `docs/phase-b/agentic-runtime/module-1/M1-03_Unified_Agentic_Runtime_State_Machines_and_Lifecycle_v2.md`
+- `docs/phase-b/agentic-runtime/module-1/M1-04_Unified_Agentic_Runtime_Integration_and_Dependency_Matrix_v2.md`
+- `docs/phase-b/agentic-runtime/module-1/M1-05_Unified_Agentic_Runtime_Security_and_Threat_Model_Addendum_v2.md`
+- `docs/phase-b/agentic-runtime/module-1/M1-06_Module_1_Architecture_Review_and_Implementation_Authorization_Record_v2.md`
+
+**Current Governance:**
+
+- Architecture Approval: **APPROVED**
+- Phase-B Implementation Authorization: **AUTHORIZED**
+- Module 1 Addendum Acceptance: **ACCEPTED**
+- Production Implementation: **BLOCKED**
+- Production Certification: **NOT CLAIMED**
+- Security Certification: **NOT CLAIMED**
+- Deployment Authorization: **NOT CLAIMED**
+
+**Security Boundary:**
+
+The Unified Agentic Runtime remains a runtime coordination plane.
+
+It SHALL NOT bypass or replace:
+
+`Aegis → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+Runtime state, registry membership, scheduling, delegation, recovery,
+communication, or lifecycle state SHALL NOT constitute authorization.
+
+**Historical Preservation:**
+
+This synchronization does not rewrite or replace the PB-DOC-002 source
+document or historical governance records. Historical `NOT AUTHORIZED`
+statements remain preserved as historical evidence.
+
+**Implementation Boundary:**
+
+This documentation synchronization does not itself implement Module 1.
+Production implementation remains BLOCKED and production certification
+remains NOT CLAIMED.
 
 ---
 

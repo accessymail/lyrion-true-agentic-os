@@ -380,6 +380,41 @@ The historical LHICF qualification provenance record is preserved and the reconc
 
 ---
 
+## Module 1 — Unified Agentic Runtime Synchronization
+
+**Module 1 Addendum:** ACCEPTED
+
+**Acceptance Record:**
+`docs/phase-b/agentic-runtime/module-1/TAOS-M1-ADDENDUM-ACCEPTANCE-RECORD_v2.md`
+
+**Baseline:**
+`PB-DOC-002 / TAOS-CORE-AGENT-RUNTIME-001`
+
+**Current Governance:**
+
+- Architecture Approval: **APPROVED**
+- Phase-B Implementation Authorization: **AUTHORIZED**
+- Module 1 Addendum Acceptance: **ACCEPTED**
+- Production Implementation: **BLOCKED**
+- Production Certification: **NOT CLAIMED**
+- Security Certification: **NOT CLAIMED**
+- Deployment Authorization: **NOT CLAIMED**
+
+**Security Boundary:**
+
+`Aegis → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+The Unified Agentic Runtime is a coordination plane and does not constitute
+an authorization authority or alternate privileged execution path.
+
+**Documentation Boundary:**
+
+This synchronization records accepted Module 1 documentation only.
+It does not claim production implementation, production certification,
+security certification, or deployment authorization.
+
+---
+
 # 10. CURRENT LIMITATIONS
 
 Not yet implemented as production infrastructure:
