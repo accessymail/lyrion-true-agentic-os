@@ -2083,3 +2083,59 @@ does not create authorization or execution authority.
 PB-DOC-002 and PB-DOC-003 remain preserved as separately governed documents.
 
 ---
+
+## Module 1.6-G — Agent Runtime Coordination
+
+**Status:** VALIDATED — CONTROLLED IMPLEMENTATION EVIDENCE
+
+**Implementation Authorization:** AUTHORIZED FOR CONTROLLED IMPLEMENTATION
+
+**Validation:** PASS
+
+**Production Implementation:** BLOCKED
+
+**Production Certification:** NOT CLAIMED
+
+**Security Certification:** NOT CLAIMED
+
+**Deployment Authorization:** NOT CLAIMED
+
+**Scope Proposal:** `docs/phase-b/agentic-runtime/module-1/M1-09_Module_1.6-G_Agent_Runtime_Coordination_Scope_and_Architecture_Proposal_v1.md`
+
+**Implementation Authorization:** `docs/phase-b/agentic-runtime/module-1/governance/TAOS-M1.6-G-IMPLEMENTATION-AUTHORIZATION-RECORD-001.md`
+
+**Validation Record:** `docs/phase-b/agentic-runtime/module-1/validation/m1-6-g/TAOS-M1.6-G-VALIDATION-RECORD-001.md`
+
+**Manifest Reconciliation Proposal:** `docs/phase-b/agentic-runtime/module-1/reconciliation/MODULE_1.6-G_FORMAL_VALIDATION_MANIFEST_RECONCILIATION_PROPOSAL_v1.md`
+
+**Coordination Scope:**
+
+Scheduling coordination, runtime routing and dispatch coordination, task-agent coordination, resource coordination, runtime communication coordination, coordination integrity, correlation and provenance, and coordination observability.
+
+**Security Boundary:**
+
+`Authorization → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+**Non-Authority Boundary:**
+
+Scheduling, routing, resource allocation, communication, runtime state, provenance, observability, recovery coordination, and retry coordination do not create, grant, restore, escalate, or bypass authorization, capability authority, execution admission, delegated authority, or host access.
+
+**Coordination Security Boundary:**
+
+M1.6-G is a coordination-plane capability only. Scheduling does not constitute authorization. Routing does not constitute authorization. Resource allocation does not constitute capability grant. Communication does not constitute authorization. Runtime state does not constitute authorization. Provenance does not constitute authorization. Observability does not constitute authorization. Recovery does not restore authority. Retry does not constitute authorization.
+
+**Integration Boundary:**
+
+M1.6-G integrates with the existing M1.6-E lifecycle and task-binding boundary and the M1.6-F supervision, failure handling, cancellation, containment, and recovery coordination boundary.
+
+**Recovery Boundary:**
+
+Recovery coordination may restore runtime context, correlation, lifecycle continuity, provenance, and recoverable state. Recovery must not restore revoked, expired, invalid, or stale authority. Consequential recovered execution requires fresh security validation and admission.
+
+**Reserved / Out of Scope:**
+
+Creation or replacement of authorization, capability grants, delegated authority, execution admission, authority restoration or escalation, privileged host execution, security-chain bypass, alternate security authority, unrestricted host control, self-learning, self-evolution, self-awareness, self-recognition, self-understanding, self-wakeup, self-response, production deployment, production certification, security certification, and deployment authorization.
+
+**Implementation Boundary:**
+
+The validated Module 1.6-G implementation remains a controlled Phase-B implementation. This manifest entry does not authorize production implementation, production certification, security certification, deployment, unrestricted host control, or any new security authority.
