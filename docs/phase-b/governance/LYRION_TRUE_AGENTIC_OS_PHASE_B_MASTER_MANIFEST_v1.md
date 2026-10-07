@@ -1343,3 +1343,45 @@ PB-DOC-003 remains separately governed as the Agent Identity & Authority Model
 and is not marked complete by this reconciliation.
 
 ---
+
+## Module 1.6-F — Agent Runtime Supervision / Failure Handling / Recovery Coordination
+
+**Status:** VALIDATED — CONTROLLED IMPLEMENTATION EVIDENCE
+
+**Implementation Authorization:** AUTHORIZED FOR CONTROLLED IMPLEMENTATION
+
+**Validation:** PASS
+
+**Production Implementation:** BLOCKED
+
+**Production Certification:** NOT CLAIMED
+
+**Security Certification:** NOT CLAIMED
+
+**Deployment Authorization:** NOT CLAIMED
+
+**Specification:** `docs/phase-b/agentic-runtime/module-1/M1-08_Module_1.6-F_Agent_Runtime_Supervision_Failure_Handling_and_Recovery_Coordination_Specification_v1.md`
+
+**Implementation Authorization:** `docs/phase-b/agentic-runtime/module-1/governance/TAOS-M1.6-F-IMPLEMENTATION-AUTHORIZATION-RECORD-001.md`
+
+**Validation Record:** `docs/phase-b/agentic-runtime/module-1/validation/m1-6-f/TAOS-M1.6-F-VALIDATION-RECORD-001.md`
+
+**Security Boundary:**
+
+`Authorization → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+**Non-Authority Boundary:**
+
+Runtime supervision, health state, failure handling, cancellation, containment, quarantine, retry, recovery, provenance, lifecycle state, task binding, runtime context, and observability do not create, grant, restore, escalate, or bypass authorization, capability authority, execution admission, delegated authority, or host access.
+
+**Recovery Boundary:**
+
+Recovery may restore runtime context, correlation, lifecycle continuity, provenance, and recoverable state. Recovery must not restore revoked, expired, invalid, or stale authority. Consequential recovered execution requires fresh security validation and admission.
+
+**Reserved / Out of Scope:**
+
+Self-learning, self-evolution, self-awareness, self-recognition, self-understanding, self-wakeup, self-response, production deployment, production certification, security certification, and deployment authorization.
+
+**Implementation Boundary:**
+
+The validated Module 1.6-F implementation remains a controlled Phase-B implementation. This manifest entry does not authorize production implementation, production certification, security certification, or deployment.
