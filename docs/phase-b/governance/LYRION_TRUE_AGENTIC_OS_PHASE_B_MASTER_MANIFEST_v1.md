@@ -1196,6 +1196,48 @@ No self-learning or self-evolution capability is introduced.
 
 ---
 
+## Module 1.6-E — Agent Runtime Lifecycle / Task-Binding Integration
+
+**Authorization Record:**
+`docs/phase-b/agentic-runtime/module-1/governance/TAOS-M1.6-E-IMPLEMENTATION-AUTHORIZATION-RECORD-001.md`
+
+**Specification:**
+`docs/phase-b/agentic-runtime/module-1/M1-07_Module_1.6-E_Agent_Runtime_Lifecycle_and_Task_Binding_Integration_Specification_v1.md`
+
+**Status:** `AUTHORIZED FOR CONTROLLED IMPLEMENTATION`
+
+**Module 1.6-D Validation:** `PASS`
+
+**Production Implementation:** `BLOCKED`
+
+**Production Certification:** `NOT CLAIMED`
+
+**Security Certification:** `NOT CLAIMED`
+
+**Deployment Authorization:** `NOT CLAIMED`
+
+**Security Boundary:**
+
+`Authorization → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+**Non-Authority:**
+
+Module 1.6-E SHALL NOT create authorization, capability authority,
+execution admission, delegated authority, privileged host execution,
+or an alternate security path.
+
+**Reserved:**
+
+Self-learning, self-evolution, self-awareness, self-recognition,
+self-understanding, self-wakeup, and self-response remain out of scope.
+
+**Implementation Boundary:**
+
+This entry records the formal Module 1.6-E governance decision.
+It does not authorize production implementation, certification,
+or deployment authorization.
+
+
 
 ---
 
