@@ -875,7 +875,7 @@ validated and preserved as exact-byte validation artifacts:
 
 ### Validation Artifact Location
 
-`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
+the controlled external LYRION Library validation provenance
 
 ### Governance Boundary
 
@@ -1443,3 +1443,47 @@ Creation or replacement of authorization, capability grants, delegated authority
 **Implementation Boundary:**
 
 The validated Module 1.6-G implementation remains a controlled Phase-B implementation. This manifest entry does not authorize production implementation, production certification, security certification, deployment, unrestricted host control, or any new security authority.
+
+---
+
+## Module 1 — Final Closure Synchronization
+
+**Closure Assessment:** `docs/phase-b/agentic-runtime/module-1/TAOS-MODULE-1-REMAINING-SCOPE-CLOSURE-ASSESSMENT-001.md`
+
+**Closure Decision Record:** `docs/phase-b/agentic-runtime/module-1/governance/TAOS-MODULE-1-CLOSURE-DECISION-RECORD-001.md`
+
+**Closure Assessment SHA-256:** `40a620122e24d83b8e4a40aefe5deac206848426476fd9ac6c350e4234daedbc`
+
+**Closure Decision SHA-256:** `840e036e1c294e2c51aecf98e3c2dd522b3e043770db653a4cbca16c32346b67`
+
+### Final Module 1 Governance State
+
+- **Module 1 Implementation Scope:** CLOSED
+- **Module 1 Architectural Addendum:** ACCEPTED
+- **M1.6-G:** FINAL VALIDATED RUNTIME IMPLEMENTATION SCOPE
+- **M1.6-H:** NOT REQUIRED
+- **Remaining Module 1 Implementation Gap:** NONE IDENTIFIED
+- **Agent Runtime:** VALIDATED THROUGH M1.6-G
+- **Production Implementation:** BLOCKED
+- **Production Certification:** NOT CLAIMED
+- **Security Certification:** NOT CLAIMED
+- **Deployment Authorization:** NOT CLAIMED
+- **Unrestricted Host Control:** NOT AUTHORIZED
+
+### Architectural Boundary
+
+The Unified Agentic Runtime remains a coordination plane.
+
+`Aegis → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+Module 1 does not create authorization, grant capabilities, manufacture delegated authority, bypass the established execution-security chain, restore revoked authority, or create unrestricted host access.
+
+M1.6-H shall not be created merely to extend the numbering sequence. Any future Agent Runtime expansion requires a separately governed requirement, architecture/security analysis, implementation authorization, controlled implementation, validation, and evidence reconciliation.
+
+### Reserved / Held Scope
+
+Self-learning, self-evolution, autonomous behavioral modification, autonomous policy modification, autonomous capability expansion, autonomous architecture modification, self-awareness, self-recognition, self-understanding, self-modeling, governed self-wakeup, and governed self-response remain outside current implementation scope.
+
+### Synchronization Rule
+
+This closure does not represent production certification, security certification, deployment authorization, or completion of the entire LYRION True Agentic OS platform.

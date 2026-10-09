@@ -1,5 +1,0 @@
-## 3. G47-Related Files
-
-artifacts/g47-authoritative-inventory/G47_FILES.txt
-artifacts/g47-authoritative-inventory/G47_REFERENCES.txt
-

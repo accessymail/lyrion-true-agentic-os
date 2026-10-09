@@ -58,7 +58,7 @@ It does **not** establish:
 
 Documentation backups were created before synchronization:
 
-`/home/aniket/lyrion-migration-verified/NOT_USABLE_DOCUMENTS/Don't use/PHASE_B_DOCUMENTATION_SYNC_BACKUPS/2026-09-30T04:11:36.262783Z`
+a preserved historical documentation-synchronization backup retained outside the active GitHub repository
 
 No runtime implementation or test files were modified by this
 documentation synchronization operation.

@@ -1553,16 +1553,16 @@ The passed validation artifacts are preserved under:
 
 ## Manifest Architecture
 
-The repository maintains two intentionally synchronized Project Manifest
-copies:
+The repository maintains a single repository synchronization manifest:
 
-- `Manifest.md`
 - `docs/Manifest.md`
 
 No dedicated VS Code Manifest exists in this repository and none is created
 by this synchronization.
 
-The Phase-B Master Manifest remains an independent governance artifact.
+The project-level authoritative governance document is
+`docs/LYRION_TRUE_AGENTIC_OS_MASTER_MANIFEST_v2.0.0.md`.
+The Phase-B Master Manifest remains an independent Phase-B governance artifact.
 
 ## Synchronization Rule
 
@@ -1632,9 +1632,8 @@ Validation gates:
 - Runtime mapping/reconciliation/review: **PASS**
 - Source SHA-256 integrity: **PASS**
 
-Validation artifacts are preserved under:
-
-`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
+Validation and provenance artifacts are maintained in the controlled
+external LYRION Library and are not part of the active GitHub repository.
 
 This record is a validation/provenance synchronization record only.
 
@@ -1685,11 +1684,9 @@ The following R2.21.1 controlled-validation components and validation record wer
 
 ### Library Validation File Preservation
 
-Validated files are preserved under:
+Validation provenance is maintained in the controlled external LYRION Library.
 
-`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
-
-The Library copies were independently verified against their repository sources by byte comparison and SHA-256 comparison.
+The validation provenance was independently verified against the repository sources by byte comparison and SHA-256 comparison.
 
 ### Governance Boundary
 
@@ -1717,7 +1714,9 @@ Current governance boundaries remain unchanged:
 - Self-Awareness Family: **FUTURE-RESERVED**
 
 No dedicated VS Code Manifest is created by this synchronization.
-The Phase-B Master Manifest remains an independent governance artifact.
+The project-level authoritative governance document is
+`docs/LYRION_TRUE_AGENTIC_OS_MASTER_MANIFEST_v2.0.0.md`.
+The Phase-B Master Manifest remains an independent Phase-B governance artifact.
 
 
 ### R2.21 V2 Controlled Validation Components
@@ -1754,11 +1753,13 @@ Governance boundaries remain unchanged:
 - Promotion: NO
 - Governance changed: NO
 
-The canonical Library destination remains:
+The controlled external LYRION Library remains the canonical destination for
+preserved validation/provenance records.
 
-`Library/LYRION/LYRION TRUE AGENTIC OS/DOCUMENTATION/Validation Files/`
-
-No dedicated VS Code Manifest was created. The existing `Manifest.md` and `docs/Manifest.md` remain the synchronized repository manifest copies.
+No dedicated VS Code Manifest was created.
+`docs/Manifest.md` remains the repository synchronization manifest.
+The project-level Master Manifest and Phase-B Master Manifest remain the
+authoritative governance documents for their respective scopes.
 
 The preserved failed SHA-integrity artifact remains repository audit history and is intentionally excluded from the Validation Files population.
 ---
@@ -2046,6 +2047,48 @@ No self-learning or self-evolution capability is introduced.
 
 ---
 
+## Module 1.6-E — Agent Runtime Lifecycle / Task-Binding Integration
+
+**Authorization Record:**
+`docs/phase-b/agentic-runtime/module-1/governance/TAOS-M1.6-E-IMPLEMENTATION-AUTHORIZATION-RECORD-001.md`
+
+**Specification:**
+`docs/phase-b/agentic-runtime/module-1/M1-07_Module_1.6-E_Agent_Runtime_Lifecycle_and_Task_Binding_Integration_Specification_v1.md`
+
+**Status:** `AUTHORIZED FOR CONTROLLED IMPLEMENTATION`
+
+**Module 1.6-D Validation:** `PASS`
+
+**Production Implementation:** `BLOCKED`
+
+**Production Certification:** `NOT CLAIMED`
+
+**Security Certification:** `NOT CLAIMED`
+
+**Deployment Authorization:** `NOT CLAIMED`
+
+**Security Boundary:**
+
+`Authorization → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+**Non-Authority:**
+
+Module 1.6-E SHALL NOT create authorization, capability authority,
+execution admission, delegated authority, privileged host execution,
+or an alternate security path.
+
+**Reserved:**
+
+Self-learning, self-evolution, self-awareness, self-recognition,
+self-understanding, self-wakeup, and self-response remain out of scope.
+
+**Implementation Boundary:**
+
+This entry records the formal Module 1.6-E governance decision.
+It does not authorize production implementation, certification,
+or deployment authorization.
+
+
 
 ---
 
@@ -2081,6 +2124,50 @@ The compatibility adapter performs deterministic identity translation only and
 does not create authorization or execution authority.
 
 PB-DOC-002 and PB-DOC-003 remain preserved as separately governed documents.
+
+---
+
+## Module 1.6-F — Agent Runtime Supervision / Failure Handling / Recovery Coordination
+
+**Status:** VALIDATED — CONTROLLED IMPLEMENTATION EVIDENCE
+
+**Implementation Authorization:** AUTHORIZED FOR CONTROLLED IMPLEMENTATION
+
+**Validation:** PASS
+
+**Production Implementation:** BLOCKED
+
+**Production Certification:** NOT CLAIMED
+
+**Security Certification:** NOT CLAIMED
+
+**Deployment Authorization:** NOT CLAIMED
+
+**Specification:** `docs/phase-b/agentic-runtime/module-1/M1-08_Module_1.6-F_Agent_Runtime_Supervision_Failure_Handling_and_Recovery_Coordination_Specification_v1.md`
+
+**Implementation Authorization:** `docs/phase-b/agentic-runtime/module-1/governance/TAOS-M1.6-F-IMPLEMENTATION-AUTHORIZATION-RECORD-001.md`
+
+**Validation Record:** `docs/phase-b/agentic-runtime/module-1/validation/m1-6-f/TAOS-M1.6-F-VALIDATION-RECORD-001.md`
+
+**Security Boundary:**
+
+`Authorization → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+**Non-Authority Boundary:**
+
+Runtime supervision, health state, failure handling, cancellation, containment, quarantine, retry, recovery, provenance, lifecycle state, task binding, runtime context, and observability do not create, grant, restore, escalate, or bypass authorization, capability authority, execution admission, delegated authority, or host access.
+
+**Recovery Boundary:**
+
+Recovery may restore runtime context, correlation, lifecycle continuity, provenance, and recoverable state. Recovery must not restore revoked, expired, invalid, or stale authority. Consequential recovered execution requires fresh security validation and admission.
+
+**Reserved / Out of Scope:**
+
+Self-learning, self-evolution, self-awareness, self-recognition, self-understanding, self-wakeup, self-response, production deployment, production certification, security certification, and deployment authorization.
+
+**Implementation Boundary:**
+
+The validated Module 1.6-F implementation remains a controlled Phase-B implementation. This manifest entry does not authorize production implementation, production certification, security certification, or deployment.
 
 ---
 
@@ -2139,3 +2226,47 @@ Creation or replacement of authorization, capability grants, delegated authority
 **Implementation Boundary:**
 
 The validated Module 1.6-G implementation remains a controlled Phase-B implementation. This manifest entry does not authorize production implementation, production certification, security certification, deployment, unrestricted host control, or any new security authority.
+
+---
+
+## Module 1 — Final Closure Synchronization
+
+**Closure Assessment:** `docs/phase-b/agentic-runtime/module-1/TAOS-MODULE-1-REMAINING-SCOPE-CLOSURE-ASSESSMENT-001.md`
+
+**Closure Decision Record:** `docs/phase-b/agentic-runtime/module-1/governance/TAOS-MODULE-1-CLOSURE-DECISION-RECORD-001.md`
+
+**Closure Assessment SHA-256:** `40a620122e24d83b8e4a40aefe5deac206848426476fd9ac6c350e4234daedbc`
+
+**Closure Decision SHA-256:** `840e036e1c294e2c51aecf98e3c2dd522b3e043770db653a4cbca16c32346b67`
+
+### Final Module 1 Governance State
+
+- **Module 1 Implementation Scope:** CLOSED
+- **Module 1 Architectural Addendum:** ACCEPTED
+- **M1.6-G:** FINAL VALIDATED RUNTIME IMPLEMENTATION SCOPE
+- **M1.6-H:** NOT REQUIRED
+- **Remaining Module 1 Implementation Gap:** NONE IDENTIFIED
+- **Agent Runtime:** VALIDATED THROUGH M1.6-G
+- **Production Implementation:** BLOCKED
+- **Production Certification:** NOT CLAIMED
+- **Security Certification:** NOT CLAIMED
+- **Deployment Authorization:** NOT CLAIMED
+- **Unrestricted Host Control:** NOT AUTHORIZED
+
+### Architectural Boundary
+
+The Unified Agentic Runtime remains a coordination plane.
+
+`Aegis → Capability Gateway → Execution Admission → Secure Executor → Agent Sandbox → LHICF → Host`
+
+Module 1 does not create authorization, grant capabilities, manufacture delegated authority, bypass the established execution-security chain, restore revoked authority, or create unrestricted host access.
+
+M1.6-H shall not be created merely to extend the numbering sequence. Any future Agent Runtime expansion requires a separately governed requirement, architecture/security analysis, implementation authorization, controlled implementation, validation, and evidence reconciliation.
+
+### Reserved / Held Scope
+
+Self-learning, self-evolution, autonomous behavioral modification, autonomous policy modification, autonomous capability expansion, autonomous architecture modification, self-awareness, self-recognition, self-understanding, self-modeling, governed self-wakeup, and governed self-response remain outside current implementation scope.
+
+### Synchronization Rule
+
+This closure does not represent production certification, security certification, deployment authorization, or completion of the entire LYRION True Agentic OS platform.
